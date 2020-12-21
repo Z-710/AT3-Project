@@ -5,28 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AT3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Chatterpillar v1.0" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Column="1" Grid.Row="1">
-            Application 
-        </TextBlock>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="229" Margin="380,79,0,0" VerticalAlignment="Top" Width="173">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="0,0,-2,0" VerticalAlignment="Top" Width="173">
+                <Label Content="Chatterpillar" FontSize="20" Margin="9,-1,17,1"/>
+            </Border>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="419" Margin="40,0,0,0" VerticalAlignment="Top" Width="189" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
+            <Image Margin="-13,76,-12,201" Source="Symbol.JPG"/>
+        </Border>
+        <Label Content="Enter Password" HorizontalAlignment="Left" Margin="389,121,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" Margin="399,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Enter" HorizontalAlignment="Left" Margin="399,215,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="Dialog" HorizontalAlignment="Left" Height="23" Margin="619,50,0,0" TextWrapping="Wrap" Text="Dialog" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

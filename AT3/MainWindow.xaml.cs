@@ -24,5 +24,10 @@ namespace AT3
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Dialog.Text = Password.Text;
+        }
     }
 }
