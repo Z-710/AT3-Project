@@ -5,30 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
+using System.Threading;
+
 
 namespace AT3
 {
     class Logger
     {
-        private FileStream fs;
+        // Handle for logfile
+        private static FileStream fs = null;
+        // Singleton object required
+        private static Logger _instance = null;
 
-        public Logger()
+        // Use GetInstance function to get access to the single object  
+        public static Logger GetInstance()
         {
-            //Constructor - Create and open the log file
+            if (_instance == null)
+            {
+                _instance = new Logger();
+            }
+                return _instance;
+        }
+        private Logger()
+        {
+            // Open the log file
             OpenLogFile();
-            
+
         }
         ~Logger()
         {
-            //Destructor - Close the log file 
+            // Close the log file
             CloseLogFile();
         }
         public void WriteLogMessage(string logMessage)
         {
+
             DateTime now = DateTime.Now;
-            byte[] info = new UTF8Encoding(true).GetBytes(now + " " + logMessage);
+            byte[] info = new UTF8Encoding(true).GetBytes(now + " " + logMessage + "\r\n");
             // Add some information to the file.
             fs.Write(info, 0, info.Length);
+
         }
         private void OpenLogFile()
         {
@@ -60,17 +76,24 @@ namespace AT3
                     DirectoryInfo di = Directory.CreateDirectory(Chatterpillarfolder);
                 }
                 // Create the file, or overwrite if the file exists.
-                using (fs = File.Create(fileName))
-                {
-                    WriteLogMessage("Logger Started");
-                }
+                fs = File.Create(fileName);
+                
+                WriteLogMessage("Log Started");
+                WriteLogMessage("Log Begun");
+                
+
             }
+
             catch (Exception ex)
             {
+
             }
+
         }
+
         public void CloseLogFile()
         {
+
             fs.Close();
         }
     }

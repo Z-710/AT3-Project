@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -24,8 +25,13 @@ namespace AT3
         public MainWindow()
         {
             InitializeComponent();
+            Logger myLogger = Logger.GetInstance();
+            Logger myLogger2 = Logger.GetInstance();
+            if (myLogger == myLogger2)
+            {
+                myLogger.WriteLogMessage("mainwindow");
+            }
             
- 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

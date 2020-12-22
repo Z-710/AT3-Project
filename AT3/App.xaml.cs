@@ -15,8 +15,7 @@ namespace AT3
     
     public partial class App : Application
     {
-        //Instantiate the Logger
-        Logger myLogger = new Logger();
+  
 
     }
 }
