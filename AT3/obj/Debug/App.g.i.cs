@@ -64,6 +64,7 @@ namespace AT3 {
             AT3.App app = new AT3.App();
             app.InitializeComponent();
             app.Run();
+
         }
     }
 }

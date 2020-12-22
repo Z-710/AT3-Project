@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +12,11 @@ namespace AT3
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    
     public partial class App : Application
     {
+        //Instantiate the Logger
+        Logger myLogger = new Logger();
+
     }
 }
