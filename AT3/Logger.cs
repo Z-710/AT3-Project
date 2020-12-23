@@ -79,9 +79,6 @@ namespace AT3
                 fs = File.Create(fileName);
                 
                 WriteLogMessage("Log Started");
-                WriteLogMessage("Log Begun");
-                
-
             }
 
             catch (Exception ex)

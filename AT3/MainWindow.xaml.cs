@@ -21,22 +21,39 @@ namespace AT3
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        // Define the variables used
+        private bool firstTimePassword = false;
+        Password myPassword = null;
+        Logger myLogger = null;
         public MainWindow()
         {
             InitializeComponent();
-            Logger myLogger = Logger.GetInstance();
-            Logger myLogger2 = Logger.GetInstance();
-            if (myLogger == myLogger2)
+            // Initialise the Logger
+            myLogger = Logger.GetInstance();
+            myLogger.WriteLogMessage("Logger Initialised");
+            // Initialise the Password
+            myPassword = Password.GetInstance();
+            myLogger.WriteLogMessage("Password Initialised");
+            // Check whether user password has been entered previously 
+            if (myPassword.UserPasswordExists())
             {
-                myLogger.WriteLogMessage("mainwindow");
+                // Ask for the existing password
             }
-            
+            else
+            {
+                // Ask for the user password 
+                EnterPassword.Content = "New Password";
+                firstTimePassword = true;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Dialog.Text = Password.Text;
+            if (firstTimePassword)
+            {
+                myPassword.WritePassword(PasswordBox.Text, Password.PasswordType.User);
+                myLogger.WriteLogMessage("User Password Saved");
+            }
         }
     }
 }
