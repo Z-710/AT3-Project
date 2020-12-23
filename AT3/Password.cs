@@ -93,27 +93,60 @@ namespace AT3
             }
 
         }
-        public void CheckPassword(string pwd, PasswordType type)
-        {
-
-
-        }
-        public bool UserPasswordExists()
+        public bool CheckPassword(string pwd)
         {
             string userType = "";
-            bool userPwdExists = false;
+            string userPwd = "";
+            bool pwdMatched = false;
             // Check to see if password file exists
-            ReadPasswordFile();
+            if (Xtr == null) ReadPasswordFile();
             if (Xtr == null)
             {
                 return false;
             }
             else
             {
+
                 // Check for password with type user
                 while (Xtr.Read())
                 {
-                    if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "Type"))
+                    if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "type"))
+                    {
+                        userType = Xtr.ReadElementString();
+                        if ((userType == "user") || (userType == "admin"))
+                        {
+                            // Check the password matches
+                            Xtr.Read();
+                            if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "pwd"))
+                            {
+                                userPwd = Xtr.ReadElementString();
+                                if (pwd == userPwd) pwdMatched = true;
+                            }
+                        }
+                    }
+                }
+            }
+            Xtr.Close();
+            Xtr = null;
+            return pwdMatched;
+        }
+        public bool UserPasswordExists()
+        {
+            string userType = "";
+            bool userPwdExists = false;
+            // Check to see if password file exists
+            if (Xtr == null) ReadPasswordFile();
+            if (Xtr == null)
+            {
+                return false;
+            }
+            else
+            {
+
+                // Check for password with type user
+                while (Xtr.Read())
+                {
+                    if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "type"))
                     {
                         userType = Xtr.ReadElementString();
                         if (userType == "user")
@@ -122,6 +155,8 @@ namespace AT3
                         }
                     }
                 }
+                Xtr.Close();
+                Xtr = null;
                 return userPwdExists;
             }
         }

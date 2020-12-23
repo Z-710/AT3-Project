@@ -51,8 +51,23 @@ namespace AT3
         {
             if (firstTimePassword)
             {
-                myPassword.WritePassword(PasswordBox.Text, Password.PasswordType.User);
-                myLogger.WriteLogMessage("User Password Saved");
+                myPassword.WritePassword(PasswordBox.Password, Password.PasswordType.User);
+                myLogger.WriteLogMessage("New Password Saved");
+            }
+            else
+            {
+                if (myPassword.CheckPassword(PasswordBox.Password))
+                {
+                    myLogger.WriteLogMessage("Password Match");
+                    Confirmation.Content = "Correct Password";
+                    PasswordBox.Password = "";
+                }
+                else
+                {
+                    myLogger.WriteLogMessage("Password Mismatch");
+                    Confirmation.Content = "Incorrect Password";
+                    PasswordBox.Password = "";
+                }
             }
         }
     }
