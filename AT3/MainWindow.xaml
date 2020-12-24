@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AT3"
         mc:Ignorable="d"
-        Title="Chatterpillar v1.0" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Chatterpillar v1.0" Height="500" Width="900" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="229" Margin="380,79,0,0" VerticalAlignment="Top" Width="173">
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="0,0,-2,0" VerticalAlignment="Top" Width="173">
-                <Label Content="Chatterpillar" FontSize="20" Margin="9,-1,17,1"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="263" Margin="407,107,0,0" VerticalAlignment="Top" Width="205">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="44" Margin="0,0,-1,0" VerticalAlignment="Top" Width="204">
+                <Label Content="Chatterpillar" FontSize="22" Margin="37,1,34,-1" RenderTransformOrigin="0.42,0.595"/>
             </Border>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="419" Margin="40,0,0,0" VerticalAlignment="Top" Width="189" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
-            <Image Margin="-13,76,-12,201" Source="Symbol.JPG"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="471" Margin="40,0,0,0" VerticalAlignment="Top" Width="189" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
+            <Image Margin="0,90,9,233" Source="Symbol.JPG"/>
         </Border>
-        <Label x:Name="EnterPassword" Content="Enter Password" HorizontalAlignment="Left" Margin="389,121,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button Content="Enter" HorizontalAlignment="Left" Margin="399,215,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Label x:Name="Confirmation" Content="" HorizontalAlignment="Left" Margin="399,240,0,0" VerticalAlignment="Top" Width="134"/>
-        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="399,173,0,0" VerticalAlignment="Top" Width="122" Height="21"/>
+        <Label x:Name="EnterPassword" Content="Enter Password" HorizontalAlignment="Left" Margin="446,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Button Content="Enter" HorizontalAlignment="Left" Margin="446,240,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click" Height="28"/>
+        <Label x:Name="Confirmation" Content="" HorizontalAlignment="Left" Margin="458,268,0,0" VerticalAlignment="Top" Width="134"/>
+        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="446,200,0,0" VerticalAlignment="Top" Width="134" Height="22" RenderTransformOrigin="0.639,0.571"/>
     </Grid>
 </Window>

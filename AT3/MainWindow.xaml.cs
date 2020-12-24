@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
 using System.Windows.Controls;
+using System.Threading;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -51,19 +52,29 @@ namespace AT3
         {
             if (firstTimePassword)
             {
+                // Store the first time password
                 myPassword.WritePassword(PasswordBox.Password, Password.PasswordType.User);
                 myLogger.WriteLogMessage("New Password Saved");
+                PasswordBox.Password = "";
+                EnterPassword.Content = "Enter Password";
             }
             else
             {
                 if (myPassword.CheckPassword(PasswordBox.Password))
                 {
+                    // Display if password is correct
                     myLogger.WriteLogMessage("Password Match");
                     Confirmation.Content = "Correct Password";
                     PasswordBox.Password = "";
+                    // Open contacts window and close login window
+                    ContactsWindow cW = new ContactsWindow();
+                    cW.Show();
+                    this.Close();
+
                 }
                 else
                 {
+                    //Display if password is incorrect
                     myLogger.WriteLogMessage("Password Mismatch");
                     Confirmation.Content = "Incorrect Password";
                     PasswordBox.Password = "";
