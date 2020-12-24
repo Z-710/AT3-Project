@@ -11,12 +11,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="247" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-        <TextBox Height="53" Margin="247,0,0,0" TextWrapping="Wrap" Text="Select Contact" Width="643" TextChanged="TextBox_TextChanged" SpellCheck.IsEnabled="True" SelectionOpacity="0" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" BorderBrush="White" IsReadOnlyCaretVisible="True" IsReadOnly="True"/>
+        <TextBox Height="53" Margin="247,0,0,0" TextWrapping="Wrap" Text="Select contact to connect " Width="643" TextChanged="TextBox_TextChanged" SpellCheck.IsEnabled="True" SelectionOpacity="0" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" BorderBrush="White" IsReadOnlyCaretVisible="True" IsReadOnly="True"/>
         <Label Content="Settings" HorizontalAlignment="Left" Margin="67,71,0,0" VerticalAlignment="Top" FontSize="18" Foreground="White" Width="84" Height="38"/>
         <TextBox x:Name="TitleTextBox" HorizontalAlignment="Left" Height="55" Margin="6,6,0,0" TextWrapping="Wrap" Text="Chatterpillar" VerticalAlignment="Top" Width="236" FontSize="30" TextAlignment="Center" FontWeight="Bold" IsReadOnly="True"/>
         <TextBox HorizontalAlignment="Left" Height="34" Margin="6,109,0,0" TextWrapping="Wrap" Text="Port Number:" VerticalAlignment="Top" Width="224" FontSize="18" IsReadOnlyCaretVisible="True"/>
         <Button Content="Change" HorizontalAlignment="Left" Margin="67,148,0,0" VerticalAlignment="Top" Width="85" FontSize="16" Height="28"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,53,0,0" VerticalAlignment="Top" Width="643"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,53,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton1" Content="" Background="White"/>
+        </Border>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,158,0,0" VerticalAlignment="Top" Width="643"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,106,0,0" VerticalAlignment="Top" Width="643"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,210,0,0" VerticalAlignment="Top" Width="643"/>
@@ -24,63 +26,36 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,314,0,0" VerticalAlignment="Top" Width="643"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,366,0,0" VerticalAlignment="Top" Width="643"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,416,0,0" VerticalAlignment="Top" Width="643"/>
-        <Button x:Name="AddNew" Content="Add New" HorizontalAlignment="Left" Margin="260,428,0,0" VerticalAlignment="Top" Width="114" FontSize="18" RenderTransformOrigin="0.5,0.5" Height="31">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.007"/>
-                    <RotateTransform Angle="-0.621"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="DoneButton" Content="Done" HorizontalAlignment="Left" Margin="727,427,0,0" VerticalAlignment="Top" Width="115" FontSize="18" RenderTransformOrigin="0.5,0.5" Height="31" Click="Done_Click">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.007"/>
-                    <RotateTransform Angle="-0.621"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Label x:Name="NameLabel1" Content="Name:" HorizontalAlignment="Left" Margin="253,59,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox1" HorizontalAlignment="Left" Height="26" Margin="328,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <Label x:Name="NameLabel1" Content="Name:" HorizontalAlignment="Left" Margin="253,62,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox1" HorizontalAlignment="Left" Height="27" Margin="329,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label x:Name="IPLabel1" Content="IP Address:" HorizontalAlignment="Left" Margin="443,62,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="42"/>
-        <TextBox x:Name="IPTextBox1" HorizontalAlignment="Left" Height="26" Margin="568,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel2" Content="Name:" HorizontalAlignment="Left" Margin="253,115,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox2" HorizontalAlignment="Left" Height="26" Margin="328,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox1" HorizontalAlignment="Left" Height="26" Margin="567,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel2" Content="Name:" HorizontalAlignment="Left" Margin="253,118,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox2" HorizontalAlignment="Left" Height="27" Margin="329,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,118,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="41"/>
-        <TextBox x:Name="IPTextBox2" HorizontalAlignment="Left" Height="26" Margin="568,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel3" Content="Name:" HorizontalAlignment="Left" Margin="253,167,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox3" HorizontalAlignment="Left" Height="26" Margin="328,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox2" HorizontalAlignment="Left" Height="26" Margin="567,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel3" Content="Name:" HorizontalAlignment="Left" Margin="253,170,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox3" HorizontalAlignment="Left" Height="26" Margin="329,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,170,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="42"/>
-        <TextBox x:Name="IPTextBox3" HorizontalAlignment="Left" Height="26" Margin="568,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel4" Content="Name:" HorizontalAlignment="Left" Margin="253,218,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox4" HorizontalAlignment="Left" Height="25" Margin="328,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox3" HorizontalAlignment="Left" Height="26" Margin="567,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel4" Content="Name:" HorizontalAlignment="Left" Margin="253,222,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox4" HorizontalAlignment="Left" Height="25" Margin="329,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,222,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="41"/>
-        <TextBox x:Name="IPTextBox4" HorizontalAlignment="Left" Height="25" Margin="568,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel5" Content="Name:" HorizontalAlignment="Left" Margin="253,271,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox5" HorizontalAlignment="Left" Height="25" Margin="328,283,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox4" HorizontalAlignment="Left" Height="25" Margin="567,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel5" Content="Name:" HorizontalAlignment="Left" Margin="253,274,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox5" HorizontalAlignment="Left" Height="26" Margin="329,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,274,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="41"/>
-        <TextBox x:Name="IPTextBox5" HorizontalAlignment="Left" Height="25" Margin="568,283,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel6" Content="Name:" HorizontalAlignment="Left" Margin="253,323,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox6" HorizontalAlignment="Left" Height="26" Margin="328,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox5" HorizontalAlignment="Left" Height="25" Margin="567,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel6" Content="Name:" HorizontalAlignment="Left" Margin="253,326,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox6" HorizontalAlignment="Left" Height="27" Margin="329,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,326,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="41"/>
-        <TextBox x:Name="IPTextBox6" HorizontalAlignment="Left" Height="26" Margin="568,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
-        <Label x:Name="NameLabel7" Content="Name:" HorizontalAlignment="Left" Margin="253,373,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
-        <TextBox x:Name="NameTextBox7" HorizontalAlignment="Left" Height="26" Margin="328,385,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" TextChanged="TextBox_TextChanged_1" RenderTransformOrigin="0.5,0.5" IsReadOnly="True">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.002"/>
-                    <RotateTransform Angle="-0.156"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
+        <TextBox x:Name="IPTextBox6" HorizontalAlignment="Left" Height="26" Margin="567,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
+        <Label x:Name="NameLabel7" Content="Name:" HorizontalAlignment="Left" Margin="253,376,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
+        <TextBox x:Name="NameTextBox7" HorizontalAlignment="Left" Height="27" Margin="326,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_TextChanged_1" RenderTransformOrigin="0.5,0.5" IsReadOnly="True" FontSize="20">
+
         </TextBox>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,376,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="42"/>
-        <TextBox x:Name="IPTextBox7" HorizontalAlignment="Left" Height="26" Margin="568,385,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" TextChanged="TextBox_TextChanged_1" IsReadOnly="True"/>
+        <TextBox x:Name="IPTextBox7" HorizontalAlignment="Left" Height="26" Margin="567,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
         <Button x:Name="EditButton1" Content="Edit" HorizontalAlignment="Left" Margin="798,62,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton1_Click"/>
         <Button x:Name="EditButton1_Copy" Content="Edit" HorizontalAlignment="Left" Margin="798,115,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="34"/>
         <Button x:Name="EditButton1_Copy1" Content="Edit" HorizontalAlignment="Left" Margin="798,167,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35"/>
@@ -88,13 +63,7 @@
         <Button x:Name="EditButton1_Copy3" Content="Edit" HorizontalAlignment="Left" Margin="798,271,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.663,0.442" Height="34"/>
         <Button x:Name="EditButton1_Copy4" Content="Edit" HorizontalAlignment="Left" Margin="798,323,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="34"/>
         <Button x:Name="EditButton1_Copy5" Content="Edit" HorizontalAlignment="Left" Margin="798,373,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35"/>
-        <Button x:Name="SelectButton" Content="Select" HorizontalAlignment="Left" Margin="708,62,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35"/>
-        <Button x:Name="SelectButton_Copy" Content="Select" HorizontalAlignment="Left" Margin="708,115,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="34"/>
-        <Button x:Name="SelectButton_Copy1" Content="Select" HorizontalAlignment="Left" Margin="708,167,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35"/>
-        <Button x:Name="SelectButton_Copy2" Content="Select" HorizontalAlignment="Left" Margin="708,216,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35"/>
-        <Button x:Name="SelectButton_Copy3" Content="Select" HorizontalAlignment="Left" Margin="708,271,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.492,1.17" Height="34"/>
-        <Button x:Name="SelectButton_Copy4" Content="Select" HorizontalAlignment="Left" Margin="708,326,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.492,1.17" Height="35"/>
-        <Button x:Name="SelectButton_Copy5" Content="Select" HorizontalAlignment="Left" Margin="708,376,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.492,1.17" Height="35"/>
+        <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="785,419,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Height="39"/>
 
 
     </Grid>

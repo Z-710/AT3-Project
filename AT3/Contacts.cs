@@ -55,6 +55,7 @@ namespace AT3
             var Chatterpillarfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar");
             var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar\\Contacts.xml");
             XmlTextWriter Xtw = null;
+            int arrayIndex = 0;
             try
             {
                 // Create the AT3 and Chatterpillar folders if they do not exist
@@ -78,23 +79,23 @@ namespace AT3
                     DirectoryInfo di = Directory.CreateDirectory(Chatterpillarfolder);
                 }
                 // Write the Contacts given by user to Contacts file
-                //Xtw = new XmlTextWriter(fileName, Encoding.UTF8);
-                //Xtw.Formatting = Formatting.Indented;
-                //Xtw.WriteStartDocument();
-                //Xtw.WriteComment("Chatterpillar Contacts File");
-                //Xtw.WriteStartElement("Contacts");
-                //Xtw.WriteStartElement("p1");
-                //Xtw.WriteElementString("type", "admin");
-                //Xtw.WriteElementString("pwd", "admin123");
-                //Xtw.WriteEndElement();
-                //Xtw.WriteStartElement("p2");
-                //Xtw.WriteElementString("type", "user");
-                //Xtw.WriteElementString("pwd", pwd);
-                //Xtw.WriteEndElement();
-                //Xtw.WriteEndElement();
-                //Xtw.WriteEndDocument();
-                //Xtw.Flush();
-                //Xtw.Close();
+                Xtw = new XmlTextWriter(fileName, Encoding.UTF8);
+                Xtw.Formatting = Formatting.Indented;
+                Xtw.WriteStartDocument();
+                Xtw.WriteComment("Chatterpillar Contacts File");
+                Xtw.WriteStartElement("Contacts");
+                for (arrayIndex = 0; arrayIndex < numContacts; arrayIndex++)
+                {
+                    Xtw.WriteStartElement("c" + (arrayIndex + 1).ToString());
+                    Xtw.WriteElementString("name", Contacts.ContactArray[arrayIndex].name);
+                    Xtw.WriteElementString("IP", Contacts.ContactArray[arrayIndex].IPAddress);
+                    Xtw.WriteEndElement();
+                }
+                Xtw.WriteEndElement();
+                Xtw.WriteEndDocument();
+                Xtw.Flush();
+                Xtw.Close();
+                Xtw = null;
             }
             catch (Exception ex)
             {
