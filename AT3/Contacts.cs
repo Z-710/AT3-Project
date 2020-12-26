@@ -53,7 +53,7 @@ namespace AT3
             // Contacts file created under %appdata% which is C:\Users\<CurrentUser>\AppData\Roaming
             var AT3folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3");
             var Chatterpillarfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar");
-            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar\\Contacts.xml");
+            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar\\contacts.xml");
             XmlTextWriter Xtw = null;
             int arrayIndex = 0;
             try
@@ -104,11 +104,7 @@ namespace AT3
 
         }
         
-        public void ContactsExist()
-        {
-   
 
-        }
         public void ReadContacts()
         {
 
