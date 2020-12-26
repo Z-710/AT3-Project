@@ -401,5 +401,100 @@ namespace AT3
                 PortButton.Content = "Change";
             }
         }
+
+        private void ContactButton1_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton1.Background = Brushes.LightSkyBlue;
+            ContactButton2.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 1;
+        }
+
+        private void ContactButton2_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton2.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 2;
+        }
+
+        private void ContactButton3_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton3.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton2.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 3;
+        }
+
+        private void ContactButton4_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton4.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton2.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 4;
+        }
+
+        private void ContactButton5_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton5.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton2.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 5;
+        }
+
+        private void ContactButton6_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton6.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton2.Background = Brushes.White;
+            ContactButton7.Background = Brushes.White;
+            Contacts.selectedContact = 6;
+        }
+
+        private void ContactButton7_Click(object sender, RoutedEventArgs e)
+        {
+            ContactButton7.Background = Brushes.LightSkyBlue;
+            ContactButton1.Background = Brushes.White;
+            ContactButton3.Background = Brushes.White;
+            ContactButton4.Background = Brushes.White;
+            ContactButton5.Background = Brushes.White;
+            ContactButton6.Background = Brushes.White;
+            ContactButton2.Background = Brushes.White;
+            Contacts.selectedContact = 7;
+        }
+
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            myLogger.WriteLogMessage("Selected Contact: " + Contacts.selectedContact.ToString());
+            if (Contacts.selectedContact > 0)
+            {
+                WritingWindow wW = new WritingWindow();
+                wW.Show();
+                this.Close();
+            }
+        }
     }
 }

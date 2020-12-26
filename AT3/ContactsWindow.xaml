@@ -17,14 +17,26 @@
         <TextBox HorizontalAlignment="Left" Height="34" Margin="6,109,0,0" TextWrapping="Wrap" Text="Port Number:" VerticalAlignment="Top" Width="213" FontSize="18" IsReadOnlyCaretVisible="True" IsReadOnly="True"/>
         <Button x:Name="PortButton" Content="Change" HorizontalAlignment="Left" Margin="67,148,0,0" VerticalAlignment="Top" Width="85" FontSize="16" Height="28" Click="PortButton_Click"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,53,0,0" VerticalAlignment="Top" Width="643">
-            <Button x:Name="ContactButton1" Content="" Background="White"/>
+            <Button x:Name="ContactButton1" Content="" Background="White" Click="ContactButton1_Click"/>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,158,0,0" VerticalAlignment="Top" Width="643"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,106,0,0" VerticalAlignment="Top" Width="643"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,210,0,0" VerticalAlignment="Top" Width="643"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,262,0,0" VerticalAlignment="Top" Width="643"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,314,0,0" VerticalAlignment="Top" Width="643"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,366,0,0" VerticalAlignment="Top" Width="643"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,158,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton3" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton3_Click"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,106,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton2" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton2_Click"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,210,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton4" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton4_Click"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,262,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton5" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton5_Click"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,314,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton6" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton6_Click"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,366,0,0" VerticalAlignment="Top" Width="643">
+            <Button x:Name="ContactButton7" Content="" Background="White" Click="ContactButton7_Click"/>
+        </Border>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,416,0,0" VerticalAlignment="Top" Width="643"/>
         <Label x:Name="NameLabel1" Content="Name:" HorizontalAlignment="Left" Margin="253,62,0,0" VerticalAlignment="Top" FontSize="20" Width="75" Height="41"/>
         <TextBox x:Name="NameTextBox1" HorizontalAlignment="Left" Height="27" Margin="329,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
@@ -63,7 +75,7 @@
         <Button x:Name="EditButton5" Content="Edit" HorizontalAlignment="Left" Margin="798,271,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.663,0.442" Height="34" Click="EditButton5_Click"/>
         <Button x:Name="EditButton6" Content="Edit" HorizontalAlignment="Left" Margin="798,323,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="34" Click="EditButton6_Click"/>
         <Button x:Name="EditButton7" Content="Edit" HorizontalAlignment="Left" Margin="798,373,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton7_Click"/>
-        <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="785,419,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Height="39"/>
+        <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="785,419,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Height="39" Click="ConnectButton_Click"/>
         <TextBox x:Name="PortBox" HorizontalAlignment="Left" Height="34" Margin="122,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" FontSize="18" BorderBrush="{x:Null}" IsReadOnly="True"/>
 
 

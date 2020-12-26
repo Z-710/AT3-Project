@@ -12,7 +12,7 @@ namespace AT3
     {
         // Singleton object required
         private static Settings _instance = null;
-        // Define array of contact structures that will be used by the Settings window
+
         public struct Settingstruct
         {
             public string port;

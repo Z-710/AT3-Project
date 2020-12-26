@@ -30,3 +30,5 @@ C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\AT3.exe
 C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\AT3.pdb
 C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\ContactsWindow.g.cs
 C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\ContactsWindow.baml
+C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\WritingWindow.g.cs
+C:\Users\Cynthia\Source\Repos\Z-710\AT3-Project\AT3\obj\Debug\WritingWindow.baml

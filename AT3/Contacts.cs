@@ -22,7 +22,7 @@ namespace AT3
             public string IPAddress;
         }
         public static ContactStruct[] ContactArray = new ContactStruct[numContacts];
-
+        public static int selectedContact = 0;
        
         // Use GetInstance function to get access to the single object  
         public static Contacts GetInstance()
