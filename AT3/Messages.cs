@@ -14,6 +14,9 @@ namespace AT3
         // Store the selected contact passed into this class
         private static int selectedContact = 0;
         private static string messageFile = "";
+        public static int newestMessage = 0;
+        public static int oldestMessage = 0;
+
         // Define array of message structures that will be used by the Messages window
         public struct Messagestruct
         {
@@ -29,6 +32,15 @@ namespace AT3
             {
                 _instance = new Messages();
             }
+            // Initialise the Messages array
+            int arrayIndex;
+            for (arrayIndex = 0; arrayIndex < numMessages; arrayIndex++)
+            {
+                MessageArray[arrayIndex].type = "";
+                MessageArray[arrayIndex].message = "";
+                MessageArray[arrayIndex].time = "";
+            }
+            // Setup the message filename from the contact number passed in 
             selectedContact = contact;
             messageFile = "contact" + selectedContact.ToString() + "messages.xml";
             return _instance;
@@ -100,14 +112,6 @@ namespace AT3
 
         public void ReadMessages()
         {
-            // Initialise the Messages array
-            int arrayIndex;
-            for (arrayIndex = 0; arrayIndex < numMessages; arrayIndex++)
-            {
-                MessageArray[arrayIndex].type = "";
-                MessageArray[arrayIndex].message = "";
-                MessageArray[arrayIndex].time = "";
-            }
             // Messages file created under %appdata% which is C:\Users\<CurrentUser>\AppData\Roaming
             var AT3folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3");
             var Chatterpillarfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AT3\\Chatterpillar");
@@ -145,7 +149,8 @@ namespace AT3
                     // Open the file in the xml text reader
                     Xtr = new XmlTextReader(fileName);
                     // Populate the Messages array
-                    arrayIndex = 0;
+                    int arrayIndex = 0;
+                    oldestMessage = 0;
                     while (Xtr.Read())
                     {
                         if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "type"))
@@ -165,6 +170,8 @@ namespace AT3
                                         MessageArray[arrayIndex].type = messageType;
                                         MessageArray[arrayIndex].message = messageMessage;
                                         MessageArray[arrayIndex].time = messageTime;
+                                        // Set the most recent message 
+                                        newestMessage = arrayIndex;
                                         arrayIndex++;
                                     }
                                 }
@@ -186,6 +193,14 @@ namespace AT3
             {
 
             }
+        }
+        public void GetMessages(int cursor, int numMessages, ref Messagestruct[] msgArray)
+        {
+            //Work through the array starting at the cursor position and return most recent messages
+            for (int i = 0; i < numMessages && i < cursor; i++)
+            {
+                msgArray[i] = MessageArray[cursor - i];
+            }    
         }
     }
 }

@@ -17,7 +17,7 @@
         <TextBox HorizontalAlignment="Left" Height="34" Margin="6,109,0,0" TextWrapping="Wrap" Text="Port Number:" VerticalAlignment="Top" Width="213" FontSize="18" IsReadOnlyCaretVisible="True" IsReadOnly="True"/>
         <Button x:Name="PortButton" Content="Change" HorizontalAlignment="Left" Margin="67,148,0,0" VerticalAlignment="Top" Width="85" FontSize="16" Height="28" Click="PortButton_Click"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="247,53,0,0" VerticalAlignment="Top" Width="643">
-            <Button x:Name="ContactButton1" Content="" Background="White" Click="ContactButton1_Click"/>
+            <Button x:Name="ContactButton1" Content="" Background="{x:Null}" Click="ContactButton1_Click"/>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="247,158,0,0" VerticalAlignment="Top" Width="643">
             <Button x:Name="ContactButton3" Content="" Background="White" Margin="0,0,0,-1" Click="ContactButton3_Click"/>
@@ -68,7 +68,6 @@
         </TextBox>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="443,376,0,0" VerticalAlignment="Top" FontSize="20" Width="119" Height="42"/>
         <TextBox x:Name="IPTextBox7" HorizontalAlignment="Left" Height="26" Margin="567,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged_1" IsReadOnly="True" FontSize="20"/>
-        <Button x:Name="EditButton1" Content="Edit" HorizontalAlignment="Left" Margin="798,62,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton1_Click"/>
         <Button x:Name="EditButton1_Copy" Content="Edit" HorizontalAlignment="Left" Margin="798,115,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="34" Click="EditButton1_Copy_Click"/>
         <Button x:Name="EditButton3" Content="Edit" HorizontalAlignment="Left" Margin="798,167,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton3_Click"/>
         <Button x:Name="EditButton4" Content="Edit" HorizontalAlignment="Left" Margin="798,216,0,0" VerticalAlignment="Top" Width="84" FontSize="20" RenderTransformOrigin="0.643,0.458" Height="35" Click="EditButton4_Click"/>
@@ -77,6 +76,7 @@
         <Button x:Name="EditButton7" Content="Edit" HorizontalAlignment="Left" Margin="798,373,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton7_Click"/>
         <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="785,419,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Height="39" Click="ConnectButton_Click"/>
         <TextBox x:Name="PortBox" HorizontalAlignment="Left" Height="34" Margin="122,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" FontSize="18" BorderBrush="{x:Null}" IsReadOnly="True"/>
+        <Button x:Name="EditButton1" Content="Edit" HorizontalAlignment="Left" Margin="798,62,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton1_Click"/>
 
 
     </Grid>

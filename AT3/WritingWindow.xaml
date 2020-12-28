@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="WritingWindow" Height="450" Width="800">
     <Grid>
+        <TextBox x:Name="MessageBox7" HorizontalAlignment="Left" Height="31" Margin="0,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="792" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="792" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="140" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="652,48,0,0"/>
@@ -15,12 +16,16 @@
         <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Left" Margin="669,62,0,0" VerticalAlignment="Top" Width="113" FontSize="20"/>
         <Button x:Name="DisconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="669,107,0,0" VerticalAlignment="Top" Width="113" FontSize="20"/>
         <CheckBox x:Name="ConnectedCheck" Content="Connected" HorizontalAlignment="Left" Margin="668,386,0,0" VerticalAlignment="Top" Width="114" FontSize="18" Background="#FF00C800" Foreground="White" BorderBrush="Black"/>
-        <TextBox x:Name="WritingBox" HorizontalAlignment="Left" Height="73" Margin="0,346,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="652" TextChanged="TextBox_TextChanged" Text="Type Text" FontSize="16"/>
-        <TextBox x:Name="ReceiveBox3" HorizontalAlignment="Left" Height="90" Margin="353,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FFB6B6B6"/>
-        <TextBox x:Name="ReceiveBox2" HorizontalAlignment="Left" Height="90" Margin="353,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FFB6B6B6"/>
-        <TextBox x:Name="ReceiveBox1" HorizontalAlignment="Left" Height="90" Margin="353,256,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FFB6B6B6"/>
-        <TextBox x:Name="MessageBox3" HorizontalAlignment="Left" Height="90" Margin="0,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FF629AEC"/>
-        <TextBox x:Name="MessageBox2" HorizontalAlignment="Left" Height="90" Margin="0,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FF629AEC"/>
-        <TextBox x:Name="MessageBox1" HorizontalAlignment="Left" Height="90" Margin="0,256,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" Background="#FF629AEC"/>
+        <TextBox x:Name="WritingBox" HorizontalAlignment="Left" Height="61" Margin="0,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="652" TextChanged="TextBox_TextChanged" Text="Type Text" FontSize="16"/>
+        <TextBox x:Name="MessageBox10" HorizontalAlignment="Left" Height="32" Margin="0,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
+        <TextBox x:Name="MessageBox8" HorizontalAlignment="Left" Height="32" Margin="0,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
+        <TextBox x:Name="MessageBox6" HorizontalAlignment="Left" Height="32" Margin="0,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
+        <TextBox x:Name="MessageBox9" HorizontalAlignment="Left" Height="31" Margin="0,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
+        <TextBox x:Name="MessageBox5" HorizontalAlignment="Left" Height="31" Margin="0,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
+        <ScrollBar x:Name="MessageScrollBar" HorizontalAlignment="Left" Margin="629,48,0,0" VerticalAlignment="Top" Height="310" ValueChanged="ScrollBar_ValueChanged" Width="23" Maximum="20" ViewportSize="6"/>
+        <TextBox x:Name="MessageBox3" HorizontalAlignment="Left" Height="32" Margin="0,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
+        <TextBox x:Name="MessageBox4" HorizontalAlignment="Left" Height="31" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
+        <TextBox x:Name="MessageBox2" HorizontalAlignment="Left" Height="32" Margin="0,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
+        <TextBox x:Name="MessageBox1" HorizontalAlignment="Left" Height="32" Margin="0,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
     </Grid>
 </Window>

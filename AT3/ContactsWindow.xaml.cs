@@ -77,6 +77,7 @@ namespace AT3
             mySettings.ReadSettings();
             //Populate Settings form
             PortBox.Text = Settings.settingsStructure.port;
+            //
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
