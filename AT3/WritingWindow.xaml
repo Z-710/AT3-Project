@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AT3"
         mc:Ignorable="d"
+        Closing="WritingWindow_Closing"
         Title="WritingWindow" Height="450" Width="800">
+    
     <Grid>
         <TextBox x:Name="MessageBox7" HorizontalAlignment="Left" Height="31" Margin="0,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="792" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
@@ -13,7 +15,7 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="140" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="652,48,0,0"/>
         <TextBox x:Name="TitleTextBox" HorizontalAlignment="Left" Height="32" Margin="10,6,0,0" TextWrapping="Wrap" Text="Chatterpillar" VerticalAlignment="Top" Width="167" FontSize="22" TextAlignment="Center" FontWeight="Bold" IsReadOnly="True"/>
         <Button x:Name="ContactsButton" Content="Contacts" HorizontalAlignment="Left" Margin="669,10,0,0" VerticalAlignment="Top" Width="113" FontSize="20" Click="ContactsButton_Click"/>
-        <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Left" Margin="669,62,0,0" VerticalAlignment="Top" Width="113" FontSize="20"/>
+        <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Left" Margin="669,62,0,0" VerticalAlignment="Top" Width="113" FontSize="20" Click="SendButton_Click"/>
         <Button x:Name="DisconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="669,107,0,0" VerticalAlignment="Top" Width="113" FontSize="20"/>
         <CheckBox x:Name="ConnectedCheck" Content="Connected" HorizontalAlignment="Left" Margin="668,386,0,0" VerticalAlignment="Top" Width="114" FontSize="18" Background="#FF00C800" Foreground="White" BorderBrush="Black"/>
         <TextBox x:Name="WritingBox" HorizontalAlignment="Left" Height="61" Margin="0,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="652" TextChanged="TextBox_TextChanged" Text="Type Text" FontSize="16"/>
@@ -27,5 +29,6 @@
         <TextBox x:Name="MessageBox4" HorizontalAlignment="Left" Height="31" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox2" HorizontalAlignment="Left" Height="32" Margin="0,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox1" HorizontalAlignment="Left" Height="32" Margin="0,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
+        <Button x:Name="ReceiveButton" Content="Receive" HorizontalAlignment="Left" Margin="668,150,0,0" VerticalAlignment="Top" Width="113" FontSize="20" Click="ReceiveButton_Click"/>
     </Grid>
 </Window>

@@ -10,12 +10,11 @@ namespace AT3
         // Singleton object required
         private static Messages _instance = null;
         // Fixed number of max Messages 
-        public const int numMessages = 1000;
+        public const int numMessages = 50;
         // Store the selected contact passed into this class
         private static int selectedContact = 0;
         private static string messageFile = "";
         public static int newestMessage = 0;
-        public static int oldestMessage = 0;
 
         // Define array of message structures that will be used by the Messages window
         public struct Messagestruct
@@ -89,11 +88,12 @@ namespace AT3
                 Xtw.WriteStartDocument();
                 Xtw.WriteComment("Chatterpillar Messages File");
                 Xtw.WriteStartElement("Messages");
-                for (arrayIndex = 0; arrayIndex < numMessages; arrayIndex++)
+                for (arrayIndex = 0; arrayIndex <= newestMessage; arrayIndex++)
                 {
-                    Xtw.WriteStartElement("c" + (arrayIndex + 1).ToString());
-                    Xtw.WriteElementString("name", Messages.MessageArray[arrayIndex].type);
-                    Xtw.WriteElementString("IP", Messages.MessageArray[arrayIndex].message);
+                    Xtw.WriteStartElement("m" + (arrayIndex + 1).ToString());
+                    Xtw.WriteElementString("type", Messages.MessageArray[arrayIndex].type);
+                    Xtw.WriteElementString("message", Messages.MessageArray[arrayIndex].message);
+                    Xtw.WriteElementString("time", Messages.MessageArray[arrayIndex].time);
                     Xtw.WriteEndElement();
                 }
                 Xtw.WriteEndElement();
@@ -150,7 +150,6 @@ namespace AT3
                     Xtr = new XmlTextReader(fileName);
                     // Populate the Messages array
                     int arrayIndex = 0;
-                    oldestMessage = 0;
                     while (Xtr.Read())
                     {
                         if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "type"))
@@ -194,20 +193,36 @@ namespace AT3
 
             }
         }
-        public void GetMessages(int cursor, int numMessages, ref Messagestruct[] msgArray)
+        public void GetMessages(int cursor, int numMsgs, ref Messagestruct[] msgArray)
         {
             // Clear out the message array
-            for (int i = 0; i < numMessages; i++)
+            for (int i = 0; i < numMsgs; i++)
             {
                 msgArray[i].type = "";
                 msgArray[i].message = "";
                 msgArray[i].time = "";
             }
             // Work through the array starting at the cursor position and return most recent messages
-            for (int i = 0; i < numMessages && i < cursor; i++)
+            for (int i = 0; i < numMsgs && i < cursor; i++)
             {
                 msgArray[i] = MessageArray[cursor - i];
             }    
+        }
+        public void AddMessage(Messagestruct msg)
+        {
+            // Add a new message to the messages array, shuffling down elements if full
+            if (newestMessage == (numMessages - 1))
+            {
+                for (int i = 0; i < (numMessages - 1); i++)
+                {
+                    MessageArray[i] = MessageArray[i + 1];
+                }
+            }
+            else
+            {
+                newestMessage++;
+            }
+            MessageArray[newestMessage] = msg;
         }
     }
 }

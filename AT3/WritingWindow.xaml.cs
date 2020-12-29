@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 
 namespace AT3
@@ -62,9 +63,18 @@ namespace AT3
 
         private void ContactsButton_Click(object sender, RoutedEventArgs e)
         {
+            // Save the message file 
+            myMessages.WriteMessages();
+            myLogger.WriteLogMessage("Writing Messages File");
             ContactsWindow cW = new ContactsWindow();
             cW.Show();
             this.Close();
+        }
+        private void WritingWindow_Closing(object sender, CancelEventArgs e)
+        {
+            // Save the message file 
+            myMessages.WriteMessages();
+            myLogger.WriteLogMessage("Writing Messages File");
         }
 
         private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -91,36 +101,75 @@ namespace AT3
         private void PopulateMessageForm()
         {
             // Copy the view array messages into the message boxes
-            MessageBox1.Text = viewArray[0].time + viewArray[0].message;
+            MessageBox1.Text = viewArray[0].time +" "+ viewArray[0].message;
             if (viewArray[0].type == "send") MessageBox1.Background = Brushes.LightSkyBlue;
             else MessageBox1.Background = Brushes.LightGray;
-            MessageBox2.Text = viewArray[1].time + viewArray[1].message;
+            MessageBox2.Text = viewArray[1].time +" "+ viewArray[1].message;
             if (viewArray[1].type == "send") MessageBox2.Background = Brushes.LightSkyBlue;
             else MessageBox2.Background = Brushes.LightGray;
-            MessageBox3.Text = viewArray[2].time + viewArray[2].message;
+            MessageBox3.Text = viewArray[2].time +" "+ viewArray[2].message;
             if (viewArray[2].type == "send") MessageBox3.Background = Brushes.LightSkyBlue;
             else MessageBox3.Background = Brushes.LightGray;
-            MessageBox4.Text = viewArray[3].time + viewArray[3].message;
+            MessageBox4.Text = viewArray[3].time +" "+ viewArray[3].message;
             if (viewArray[3].type == "send") MessageBox4.Background = Brushes.LightSkyBlue;
             else MessageBox4.Background = Brushes.LightGray;
-            MessageBox5.Text = viewArray[4].time + viewArray[4].message;
+            MessageBox5.Text = viewArray[4].time +" "+ viewArray[4].message;
             if (viewArray[4].type == "send") MessageBox5.Background = Brushes.LightSkyBlue;
             else MessageBox5.Background = Brushes.LightGray;
-            MessageBox6.Text = viewArray[5].time + viewArray[5].message;
+            MessageBox6.Text = viewArray[5].time +" "+ viewArray[5].message;
             if (viewArray[5].type == "send") MessageBox6.Background = Brushes.LightSkyBlue;
             else MessageBox6.Background = Brushes.LightGray;
-            MessageBox7.Text = viewArray[6].time + viewArray[6].message;
+            MessageBox7.Text = viewArray[6].time +" "+ viewArray[6].message;
             if (viewArray[6].type == "send") MessageBox7.Background = Brushes.LightSkyBlue;
             else MessageBox7.Background = Brushes.LightGray;
-            MessageBox8.Text = viewArray[7].time + viewArray[7].message;
+            MessageBox8.Text = viewArray[7].time +" "+ viewArray[7].message;
             if (viewArray[7].type == "send") MessageBox8.Background = Brushes.LightSkyBlue;
             else MessageBox8.Background = Brushes.LightGray;
-            MessageBox9.Text = viewArray[8].time + viewArray[8].message;
+            MessageBox9.Text = viewArray[8].time +" "+ viewArray[8].message;
             if (viewArray[8].type == "send") MessageBox9.Background = Brushes.LightSkyBlue;
             else MessageBox9.Background = Brushes.LightGray;
-            MessageBox10.Text = viewArray[9].time + viewArray[9].message;
+            MessageBox10.Text = viewArray[9].time +" "+ viewArray[9].message;
             if (viewArray[9].type == "send") MessageBox10.Background = Brushes.LightSkyBlue;
             else MessageBox10.Background = Brushes.LightGray;
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Build up the message structure and add to the array
+            Messages.Messagestruct message;
+            message.type = "send";
+            message.message = WritingBox.Text;
+            DateTime now = DateTime.Now;
+            message.time = now.ToString();
+            myMessages.AddMessage(message);
+            myLogger.WriteLogMessage("message: type " + message.type 
+                + " datetime " + message.time + " msg " 
+                + message.message + " newest message " + Messages.newestMessage);
+            WritingBox.Text = "";
+            MessageScrollBar.Maximum = Messages.newestMessage;
+            MessageScrollBar.Value = Messages.newestMessage;
+            cursorPosition = Messages.newestMessage;
+            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            PopulateMessageForm();
+        }
+        private void ReceiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Build up the message structure and add to the array
+            Messages.Messagestruct message;
+            message.type = "receive";
+            message.message = WritingBox.Text;
+            DateTime now = DateTime.Now;
+            message.time = now.ToString();
+            myMessages.AddMessage(message);
+            myLogger.WriteLogMessage("message: type " + message.type
+                + " datetime " + message.time + " msg "
+                + message.message + " newest message " + Messages.newestMessage);
+            WritingBox.Text = "";
+            MessageScrollBar.Maximum = Messages.newestMessage;
+            MessageScrollBar.Value = Messages.newestMessage;
+            cursorPosition = Messages.newestMessage;
+            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            PopulateMessageForm();
         }
     }
 }
