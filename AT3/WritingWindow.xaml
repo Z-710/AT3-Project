@@ -22,7 +22,7 @@
         <TextBox x:Name="MessageBox6" HorizontalAlignment="Left" Height="32" Margin="0,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox9" HorizontalAlignment="Left" Height="31" Margin="0,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
         <TextBox x:Name="MessageBox5" HorizontalAlignment="Left" Height="31" Margin="0,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
-        <ScrollBar x:Name="MessageScrollBar" HorizontalAlignment="Left" Margin="629,48,0,0" VerticalAlignment="Top" Height="310" ValueChanged="ScrollBar_ValueChanged" Width="23" Maximum="20" ViewportSize="6"/>
+        <ScrollBar x:Name="MessageScrollBar" HorizontalAlignment="Left" Margin="629,48,0,0" VerticalAlignment="Top" Height="310" ValueChanged="ScrollBar_ValueChanged" Width="23" Maximum="20" ViewportSize="6" SmallChange="1"/>
         <TextBox x:Name="MessageBox3" HorizontalAlignment="Left" Height="32" Margin="0,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
         <TextBox x:Name="MessageBox4" HorizontalAlignment="Left" Height="31" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox2" HorizontalAlignment="Left" Height="32" Margin="0,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>

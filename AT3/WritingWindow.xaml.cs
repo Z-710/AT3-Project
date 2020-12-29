@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace AT3
 {
     /// <summary>
@@ -42,7 +43,7 @@ namespace AT3
             myMessages = Messages.GetInstance(Contacts.selectedContact);
             myMessages.ReadMessages();
             // Set the scrollbar thumb size
-            MessageScrollBar.Minimum = 0;
+            MessageScrollBar.Minimum = messagesShown;
             MessageScrollBar.Maximum = Messages.newestMessage;
             MessageScrollBar.ViewportSize = messagesShown;
             myLogger.WriteLogMessage("Number of messages is " + Messages.newestMessage.ToString());
@@ -51,6 +52,45 @@ namespace AT3
             cursorPosition = Messages.newestMessage;
             // Populate the message form 
             myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            PopulateMessageForm();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+        private void ContactsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContactsWindow cW = new ContactsWindow();
+            cW.Show();
+            this.Close();
+        }
+
+        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Intercept the scrollbar events  
+            int roundedValue = 0;
+            roundedValue = (int) Math.Round(MessageScrollBar.Value);
+            // Determine the new cursor position - only redraw if the change is >= 1 
+            if ((int)Math.Abs(roundedValue - cursorPosition) >= 1)
+            {
+                // Populate the message form 
+                cursorPosition = roundedValue;
+                if (cursorPosition < messagesShown) return;
+                myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+                PopulateMessageForm();
+                myLogger.WriteLogMessage("Scrollbar min = " + MessageScrollBar.Minimum.ToString() + " max = "
+                + MessageScrollBar.Maximum.ToString() + " viewport " + MessageScrollBar.ViewportSize.ToString()
+                + " value " + MessageScrollBar.Value.ToString("G04")
+                + " cursor pos " + cursorPosition);
+            }
+            return;
+        }
+        
+        private void PopulateMessageForm()
+        {
+            // Copy the view array messages into the message boxes
             MessageBox1.Text = viewArray[0].time + viewArray[0].message;
             if (viewArray[0].type == "send") MessageBox1.Background = Brushes.LightSkyBlue;
             else MessageBox1.Background = Brushes.LightGray;
@@ -81,24 +121,6 @@ namespace AT3
             MessageBox10.Text = viewArray[9].time + viewArray[9].message;
             if (viewArray[9].type == "send") MessageBox10.Background = Brushes.LightSkyBlue;
             else MessageBox10.Background = Brushes.LightGray;
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void ContactsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContactsWindow cW = new ContactsWindow();
-            cW.Show();
-            this.Close();
-        }
-
-        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
         }
     }
 }

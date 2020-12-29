@@ -196,7 +196,14 @@ namespace AT3
         }
         public void GetMessages(int cursor, int numMessages, ref Messagestruct[] msgArray)
         {
-            //Work through the array starting at the cursor position and return most recent messages
+            // Clear out the message array
+            for (int i = 0; i < numMessages; i++)
+            {
+                msgArray[i].type = "";
+                msgArray[i].message = "";
+                msgArray[i].time = "";
+            }
+            // Work through the array starting at the cursor position and return most recent messages
             for (int i = 0; i < numMessages && i < cursor; i++)
             {
                 msgArray[i] = MessageArray[cursor - i];
