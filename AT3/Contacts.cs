@@ -87,8 +87,10 @@ namespace AT3
                 for (arrayIndex = 0; arrayIndex < numContacts; arrayIndex++)
                 {
                     Xtw.WriteStartElement("c" + (arrayIndex + 1).ToString());
-                    Xtw.WriteElementString("name", Contacts.ContactArray[arrayIndex].name);
-                    Xtw.WriteElementString("IP", Contacts.ContactArray[arrayIndex].IPAddress);
+                    string encryptedName = Encryption.Encrypt(Contacts.ContactArray[arrayIndex].name, null);
+                    Xtw.WriteElementString("name", encryptedName);
+                    string encryptedIP = Encryption.Encrypt(Contacts.ContactArray[arrayIndex].IPAddress, null);
+                    Xtw.WriteElementString("IP", encryptedIP);
                     Xtw.WriteEndElement();
                 }
                 Xtw.WriteEndElement();
@@ -157,8 +159,10 @@ namespace AT3
                                 if (arrayIndex < numContacts)
                                 {
                                     // Populate array element
-                                    ContactArray[arrayIndex].name = contactName;
-                                    ContactArray[arrayIndex].IPAddress = contactIP;
+                                    string decryptedName = Encryption.Decrypt(contactName, null);
+                                    ContactArray[arrayIndex].name = decryptedName;
+                                    string decryptedIP = Encryption.Decrypt(contactIP, null);
+                                    ContactArray[arrayIndex].IPAddress = decryptedIP;
                                     arrayIndex++;
                                 }
                             }

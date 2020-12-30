@@ -57,6 +57,7 @@ namespace AT3
                 myLogger.WriteLogMessage("New Password Saved");
                 PasswordBox.Password = "";
                 EnterPassword.Content = "Enter Password";
+                firstTimePassword = false;
             }
             else
             {

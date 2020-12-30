@@ -92,7 +92,8 @@ namespace AT3
                 {
                     Xtw.WriteStartElement("m" + (arrayIndex + 1).ToString());
                     Xtw.WriteElementString("type", Messages.MessageArray[arrayIndex].type);
-                    Xtw.WriteElementString("message", Messages.MessageArray[arrayIndex].message);
+                    string encryptedMessage = Encryption.Encrypt(Messages.MessageArray[arrayIndex].message, null);
+                    Xtw.WriteElementString("message", encryptedMessage);
                     Xtw.WriteElementString("time", Messages.MessageArray[arrayIndex].time);
                     Xtw.WriteEndElement();
                 }
@@ -167,7 +168,8 @@ namespace AT3
                                     {
                                         // Populate message element
                                         MessageArray[arrayIndex].type = messageType;
-                                        MessageArray[arrayIndex].message = messageMessage;
+                                        string decryptedMessage = Encryption.Decrypt(messageMessage, null);
+                                        MessageArray[arrayIndex].message = decryptedMessage;
                                         MessageArray[arrayIndex].time = messageTime;
                                         // Set the most recent message 
                                         newestMessage = arrayIndex;

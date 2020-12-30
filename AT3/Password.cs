@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
 
+/// <Acknowledgments>
+/// How to create a singleton class
+/// https://refactoring.guru/design-patterns/singleton/csharp/example
+/// Reading and writing xml files
+/// https://www.youtube.com/watch?v=0huAY0KJdI8
+/// https://www.youtube.com/watch?v=HC60-OWSYuk
+/// Putting data files in the user application path
+/// https://stackoverflow.com/questions/867485/c-sharp-getting-the-path-of-appdata
+/// How to use git ignore
+/// https://youtu.be/ErJyWO8TGoM
+/// </Acknowledgments>
 namespace AT3
 {
     class Password
@@ -76,11 +87,13 @@ namespace AT3
                 Xtw.WriteStartElement("Password");
                 Xtw.WriteStartElement("p1");
                 Xtw.WriteElementString("type", "admin");
-                Xtw.WriteElementString("pwd", "admin123");
+                string encryptedAdmin = Encryption.Encrypt("admin123", null);
+                Xtw.WriteElementString("pwd", encryptedAdmin);
                 Xtw.WriteEndElement();
                 Xtw.WriteStartElement("p2");
                 Xtw.WriteElementString("type","user");
-                Xtw.WriteElementString("pwd", pwd);
+                string encryptedPassword = Encryption.Encrypt(pwd, null);
+                Xtw.WriteElementString("pwd", encryptedPassword);
                 Xtw.WriteEndElement();
                 Xtw.WriteEndElement();
                 Xtw.WriteEndDocument();
@@ -120,7 +133,8 @@ namespace AT3
                             if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "pwd"))
                             {
                                 userPwd = Xtr.ReadElementString();
-                                if (pwd == userPwd) pwdMatched = true;
+                                string decryptedPassword = Encryption.Decrypt(userPwd, null);
+                                if (pwd == decryptedPassword) pwdMatched = true;
                             }
                         }
                     }
