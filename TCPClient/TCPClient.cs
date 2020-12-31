@@ -40,7 +40,7 @@ namespace TCPClient
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient client = new TcpClient(machineName, 443);
+            TcpClient client = new TcpClient(machineName, 8080);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
             SslStream sslStream = new SslStream(
@@ -108,7 +108,7 @@ namespace TCPClient
         private static void DisplayUsage()
         {
             Console.WriteLine("To start the client specify:");
-            Console.WriteLine("clientSync machineName [serverName]");
+            Console.WriteLine("TCPClient machineName [serverName]");
             Environment.Exit(1);
         }
         public static int Main(string[] args)

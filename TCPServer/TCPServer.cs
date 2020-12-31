@@ -13,6 +13,9 @@ using System.IO;
 /// https://www.youtube.com/watch?v=AlE5X1NlHgg&t=512s
 /// How to write an SSL streams application
 /// https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream?view=net-5.0
+/// How to create a CA root certificate and another certificate based on it 
+/// https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate?view=win10-ps
+/// http://woshub.com/how-to-create-self-signed-certificate-with-powershell/
 /// </acknowledgments>
 
 namespace TCPServer
@@ -168,7 +171,7 @@ namespace TCPServer
         private static void DisplayUsage()
         {
             Console.WriteLine("To start the server specify:");
-            Console.WriteLine("serverSync certificateFile.cer");
+            Console.WriteLine("TCPServer certificateFile.cer");
             Environment.Exit(1);
         }
         public static int Main(string[] args)
