@@ -19,6 +19,7 @@ namespace TCPClient
 {
     public class SslTcpClient
     {
+        static X509Certificate clientCertificate = null;
         private static Hashtable certificateErrors = new Hashtable();
 
         // The following method is invoked by the RemoteCertificateValidationDelegate.
@@ -36,8 +37,21 @@ namespace TCPClient
             // Do not allow this client to communicate with unauthenticated servers.
             return false;
         }
-        public static void RunClient(string machineName, string serverName)
+        public static X509Certificate SelectLocalCertificate(
+        object sender,
+        string targetHost,
+        X509CertificateCollection localCertificates,
+        X509Certificate remoteCertificate,
+        string[] acceptableIssuers)
         {
+            Console.WriteLine("Client will use the certificate passed in");
+            return clientCertificate;
+      
+        }
+        public static void RunClient(string machineName, string serverCertificateName, string clientCertificateFile)
+        {
+            // Set local certificate from the certificate passed in 
+            clientCertificate = X509Certificate.CreateFromCertFile(clientCertificateFile);
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
             TcpClient client = new TcpClient(machineName, 8080);
@@ -47,12 +61,12 @@ namespace TCPClient
                 client.GetStream(),
                 false,
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
-                null
+                new LocalCertificateSelectionCallback(SelectLocalCertificate)
                 );
             // The server name must match the name on the server certificate.
             try
             {
-                sslStream.AuthenticateAsClient(serverName);
+                sslStream.AuthenticateAsClient(serverCertificateName);
             }
             catch (AuthenticationException e)
             {
@@ -108,29 +122,24 @@ namespace TCPClient
         private static void DisplayUsage()
         {
             Console.WriteLine("To start the client specify:");
-            Console.WriteLine("TCPClient machineName [serverName]");
+            Console.WriteLine("TCPClient machineName serverCertificateName clientCertificateFile");
             Environment.Exit(1);
         }
         public static int Main(string[] args)
         {
             string serverCertificateName = null;
             string machineName = null;
-            if (args == null || args.Length < 1)
+            string clientCertificateFile=null;
+            if (args == null || args.Length < 3)
             {
                 DisplayUsage();
             }
-            // User can specify the machine name and server name.
+            // User can specify the machine name, server certificate name and client certificate file.
             // Server name must match the name on the server's certificate.
             machineName = args[0];
-            if (args.Length < 2)
-            {
-                serverCertificateName = machineName;
-            }
-            else
-            {
-                serverCertificateName = args[1];
-            }
-            SslTcpClient.RunClient(machineName, serverCertificateName);
+            serverCertificateName = args[1];
+            clientCertificateFile = args[2];
+            SslTcpClient.RunClient(machineName, serverCertificateName, clientCertificateFile);
             return 0;
         }
     }
