@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace AT3
 {
@@ -26,6 +27,7 @@ namespace AT3
         private bool firstTimePassword = false;
         Password myPassword = null;
         Logger myLogger = null;
+        bool nextWindow = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -67,6 +69,7 @@ namespace AT3
                     myLogger.WriteLogMessage("Password Match");
                     Confirmation.Content = "Correct Password";
                     PasswordBox.Password = "";
+                    nextWindow = true;
                     // Open contacts window and close login window
                     ContactsWindow cW = new ContactsWindow();
                     cW.Show();
@@ -80,6 +83,15 @@ namespace AT3
                     Confirmation.Content = "Incorrect Password";
                     PasswordBox.Password = "";
                 }
+            }
+        }
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (nextWindow == false)
+            {
+                myLogger.WriteLogMessage("Exit Password Window");
+                //Close the application
+                Environment.Exit(0);
             }
         }
     }

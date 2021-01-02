@@ -10,6 +10,8 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Threading;
+using System.Diagnostics;
 
 /// <acknowledgments>
 /// How to write an SSL streams application
@@ -20,26 +22,17 @@ namespace AT3
 {
     public class CommsServer
     {
-        
-        // Singleton object required
-        private static CommsServer _instance = null;
         // Certificate file that will be used
         public const string serverCertificateFile = "test.z-710.com.cer";
+        private int serverPortNum;
         // Logger
         Logger myLogger = null;
         // Use GetInstance function to get access to the single object  
-        public static CommsServer GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new CommsServer();
-            }
-            return _instance;
-        }
-        private CommsServer()
+        public CommsServer(string port)
         {
             // Initialise the Logger
             myLogger = Logger.GetInstance();
+            serverPortNum = Convert.ToInt32(port);
         }
         ~CommsServer()
         {
@@ -47,12 +40,11 @@ namespace AT3
         private static X509Certificate serverCertificate = null;
         // The certificate parameter specifies the name of the file
         // containing the machine certificate.
-        public void RunServer(string certificate, string port)
+        public void RunServer()
         {
-            serverCertificate = X509Certificate.CreateFromCertFile(certificate);
+            serverCertificate = X509Certificate.CreateFromCertFile(serverCertificateFile);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections
-            int portNum = Convert.ToInt32(port);
-            TcpListener listener = new TcpListener(IPAddress.Any, portNum);
+            TcpListener listener = new TcpListener(IPAddress.Any, serverPortNum);
             listener.Start();
             while (true)
             {
@@ -61,7 +53,7 @@ namespace AT3
                 // Type CNTL-C to terminate the server.
                 TcpClient client = listener.AcceptTcpClient();
                 ProcessClient(client);
-            }
+            } 
         }
         static void ProcessClient(TcpClient client)
         {

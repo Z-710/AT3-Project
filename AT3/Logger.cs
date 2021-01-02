@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using System.Threading;
+using System.Diagnostics;
+using System.ComponentModel;
 
-
+/// <acknowledgments>
+/// How to output the date and time
+/// https://docs.microsoft.com/en-us/dotnet/api/system.datetime?view=net-5.0
+/// How to output process id and thread id
+/// https://www.codegrepper.com/code-examples/csharp/c%23+current+thread+id
+/// https://stackoverflow.com/questions/3003975/how-to-get-the-current-processid
+/// </acknowledgments>
 namespace AT3
 {
     class Logger
@@ -39,9 +47,11 @@ namespace AT3
         }
         public void WriteLogMessage(string logMessage)
         {
-
+            // Get the date and time, process id and thread id
             DateTime now = DateTime.Now;
-            byte[] info = new UTF8Encoding(true).GetBytes(now + " " + logMessage + "\r\n");
+            int nProcessID = Process.GetCurrentProcess().Id;
+            int curThread = Thread.CurrentThread.ManagedThreadId;
+            byte[] info = new UTF8Encoding(true).GetBytes(now + " pid: "+ nProcessID.ToString() +" tid: " + curThread.ToString() +" "+ logMessage + "\r\n");
             // Add some information to the file.
             fs.Write(info, 0, info.Length);
 

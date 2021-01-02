@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AT3"
         mc:Ignorable="d"
+        Closing="ContactsWindow_Closing"
         Title="ContactsWindow" Height="500" Width="900" ResizeMode="NoResize" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>

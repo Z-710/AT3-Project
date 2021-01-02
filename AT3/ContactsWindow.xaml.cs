@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
+using System.ComponentModel;
 
 
 namespace AT3
@@ -23,6 +25,7 @@ namespace AT3
         Contacts myContacts = null;
         Logger myLogger = null;
         Settings mySettings = null;
+        bool nextWindow = false;
         // Row states: 1 is edit mode, 0 shows edit button
         int row1State = 0;
         int row2State = 0;
@@ -75,9 +78,21 @@ namespace AT3
             mySettings = Settings.GetInstance();
             myLogger.WriteLogMessage("Settings Initialised");
             mySettings.ReadSettings();
-            //Populate Settings form
+            // Populate Settings form
             PortBox.Text = Settings.settingsStructure.port;
-            //
+            // Setup the comms server
+            // Create the thread object, passing in the
+            // serverObject.RunServer method using a ThreadStart delegate.
+            if (Contacts.CommsServerStarted == false)
+            {
+                Contacts.CommsServerStarted = true;
+                CommsServer serverObject = new CommsServer(Settings.settingsStructure.port);
+                Thread InstanceCaller = new Thread(
+                    new ThreadStart(serverObject.RunServer));
+                // Start the thread.
+                InstanceCaller.Start();
+                myLogger.WriteLogMessage("CommsServer Initialised");
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -492,9 +507,19 @@ namespace AT3
             myLogger.WriteLogMessage("Selected Contact: " + Contacts.selectedContact.ToString());
             if (Contacts.selectedContact > 0)
             {
+                nextWindow = true;
                 WritingWindow wW = new WritingWindow();
                 wW.Show();
                 this.Close();
+            }
+        }
+        private void ContactsWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (nextWindow == false)
+            {
+                myLogger.WriteLogMessage("Contacts Login Window");
+                //Close the application
+                Environment.Exit(0);
             }
         }
     }

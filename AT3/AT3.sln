@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPServer", "..\TCPServer\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPClient", "..\TCPClient\TCPClient.csproj", "{79E4CBF7-B627-42D0-9824-36BBF1B4540B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingApp", "..\ThreadingApp\ThreadingApp.csproj", "{71099AD5-1C59-474C-BF6A-F878A37C484B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{79E4CBF7-B627-42D0-9824-36BBF1B4540B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E4CBF7-B627-42D0-9824-36BBF1B4540B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79E4CBF7-B627-42D0-9824-36BBF1B4540B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71099AD5-1C59-474C-BF6A-F878A37C484B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71099AD5-1C59-474C-BF6A-F878A37C484B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71099AD5-1C59-474C-BF6A-F878A37C484B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71099AD5-1C59-474C-BF6A-F878A37C484B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

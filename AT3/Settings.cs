@@ -73,7 +73,8 @@ namespace AT3
                 Xtw.WriteComment("Chatterpillar Settings File");
                 Xtw.WriteStartElement("Settings");
                 Xtw.WriteStartElement("c1");
-                Xtw.WriteElementString("port", Settings.settingsStructure.port);
+                string encryptedPort = Encryption.Encrypt(Settings.settingsStructure.port, null);
+                Xtw.WriteElementString("port", encryptedPort);
                 Xtw.WriteEndElement();
                 Xtw.WriteEndElement();
                 Xtw.WriteEndDocument();
@@ -132,7 +133,8 @@ namespace AT3
                         if ((Xtr.NodeType == XmlNodeType.Element) && (Xtr.Name == "port"))
                         {
                             port = Xtr.ReadElementString();
-                            Settings.settingsStructure.port = port;
+                            string decryptedPort = Encryption.Decrypt(port, null);
+                            Settings.settingsStructure.port = decryptedPort;
                         }
                     }
                     Xtr.Close();

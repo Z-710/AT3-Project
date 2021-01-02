@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AT3"
         mc:Ignorable="d"
+        Closing="MainWindow_Closing"
         Title="Chatterpillar v1.0" Height="500" Width="900" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>

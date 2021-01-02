@@ -25,6 +25,7 @@ namespace AT3
         Logger myLogger = null;
         Settings mySettings = null;
         Messages myMessages = null;
+        bool nextWindow = false;
         // Position of the view window in the array
         int cursorPosition = 0;
         // Variables to hold messages that are displayed
@@ -63,9 +64,7 @@ namespace AT3
 
         private void ContactsButton_Click(object sender, RoutedEventArgs e)
         {
-            // Save the message file 
-            myMessages.WriteMessages();
-            myLogger.WriteLogMessage("Writing Messages File");
+            nextWindow = true;
             ContactsWindow cW = new ContactsWindow();
             cW.Show();
             this.Close();
@@ -75,6 +74,12 @@ namespace AT3
             // Save the message file 
             myMessages.WriteMessages();
             myLogger.WriteLogMessage("Writing Messages File");
+            myLogger.WriteLogMessage("Exit Writing Window");
+            if (nextWindow == false)
+            {
+                //Close the application
+                Environment.Exit(0);
+            }
         }
 
         private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
