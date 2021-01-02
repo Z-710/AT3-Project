@@ -55,12 +55,13 @@ namespace AT3
                 ProcessClient(client);
             } 
         }
-        static void ProcessClient(TcpClient client)
+        private void ProcessClient(TcpClient client)
         {
             // A client has connected. Create the
             // SslStream using the client's network stream.
             SslStream sslStream = new SslStream(
                 client.GetStream(), false);
+            
             // Authenticate the server but don't require the client to authenticate.
             try
             {
@@ -76,23 +77,23 @@ namespace AT3
                 sslStream.ReadTimeout = 5000;
                 sslStream.WriteTimeout = 5000;
                 // Read a message from the client.
-                Console.WriteLine("Waiting for client message...");
+                myLogger.WriteLogMessage("Waiting for client message...");
                 string messageData = ReadMessage(sslStream);
-                Console.WriteLine("Received: {0}", messageData);
+                myLogger.WriteLogMessage("Received: " + messageData);
 
                 // Write a message to the client.
                 byte[] message = Encoding.UTF8.GetBytes("Hello from the server.<EOF>");
-                Console.WriteLine("Sending hello message.");
+                myLogger.WriteLogMessage("Sending hello message.");
                 sslStream.Write(message);
             }
             catch (AuthenticationException e)
             {
-                Console.WriteLine("Exception: {0}", e.Message);
+                myLogger.WriteLogMessage("Exception: " + e.Message);
                 if (e.InnerException != null)
                 {
-                    Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
+                    myLogger.WriteLogMessage("Inner exception: " + e.InnerException.Message);
                 }
-                Console.WriteLine("Authentication failed - closing the connection.");
+                myLogger.WriteLogMessage("Authentication failed - closing the connection.");
                 sslStream.Close();
                 client.Close();
                 return;
@@ -106,7 +107,7 @@ namespace AT3
                 client.Close();
             }
         }
-        static string ReadMessage(SslStream sslStream)
+        private string ReadMessage(SslStream sslStream)
         {
             // Read the  message sent by the client.
             // The client signals the end of the message using the
@@ -134,60 +135,52 @@ namespace AT3
 
             return messageData.ToString();
         }
-        static void DisplaySecurityLevel(SslStream stream)
+        private void DisplaySecurityLevel(SslStream stream)
         {
-            Console.WriteLine("Cipher: {0} strength {1}", stream.CipherAlgorithm, stream.CipherStrength);
-            Console.WriteLine("Hash: {0} strength {1}", stream.HashAlgorithm, stream.HashStrength);
-            Console.WriteLine("Key exchange: {0} strength {1}", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
-            Console.WriteLine("Protocol: {0}", stream.SslProtocol);
+            myLogger.WriteLogMessage("Cipher:"+ stream.CipherAlgorithm + "strength " + stream.CipherStrength);
+            myLogger.WriteLogMessage("Hash: "+ stream.HashAlgorithm + " strength " + stream.HashStrength);
+            myLogger.WriteLogMessage("Key exchange: "+ stream.KeyExchangeAlgorithm + " strength " + stream.KeyExchangeStrength);
+            myLogger.WriteLogMessage("Protocol: "+ stream.SslProtocol);
         }
-        static void DisplaySecurityServices(SslStream stream)
+        private void DisplaySecurityServices(SslStream stream)
         {
-            Console.WriteLine("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer);
-            Console.WriteLine("IsSigned: {0}", stream.IsSigned);
-            Console.WriteLine("Is Encrypted: {0}", stream.IsEncrypted);
+            myLogger.WriteLogMessage("Is authenticated: "+ stream.IsAuthenticated + " as server? " + stream.IsServer);
+            myLogger.WriteLogMessage("IsSigned: "+ stream.IsSigned);
+            myLogger.WriteLogMessage("Is Encrypted: "+ stream.IsEncrypted);
         }
-        static void DisplayStreamProperties(SslStream stream)
+        private void DisplayStreamProperties(SslStream stream)
         {
-            Console.WriteLine("Can read: {0}, write {1}", stream.CanRead, stream.CanWrite);
-            Console.WriteLine("Can timeout: {0}", stream.CanTimeout);
+            myLogger.WriteLogMessage("Can read: "+ stream.CanRead  + " write " + stream.CanWrite);
+            myLogger.WriteLogMessage("Can timeout: "+ stream.CanTimeout);
         }
-        static void DisplayCertificateInformation(SslStream stream)
+        private void DisplayCertificateInformation(SslStream stream)
         {
-            Console.WriteLine("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
+            myLogger.WriteLogMessage("Certificate revocation list checked: "+ stream.CheckCertRevocationStatus);
 
             X509Certificate localCertificate = stream.LocalCertificate;
             if (stream.LocalCertificate != null)
             {
-                Console.WriteLine("Local cert was issued to {0} and is valid from {1} until {2}.",
-                    localCertificate.Subject,
-                    localCertificate.GetEffectiveDateString(),
-                    localCertificate.GetExpirationDateString());
+                myLogger.WriteLogMessage("Local cert was issued to "+ localCertificate.Subject +
+                    " and is valid from " + localCertificate.GetEffectiveDateString() 
+                    + " until " + localCertificate.GetExpirationDateString());
             }
             else
             {
-                Console.WriteLine("Local certificate is null.");
+                myLogger.WriteLogMessage("Local certificate is null.");
             }
             // Display the properties of the client's certificate.
             X509Certificate remoteCertificate = stream.RemoteCertificate;
             if (stream.RemoteCertificate != null)
             {
-                Console.WriteLine("Remote cert was issued to {0} and is valid from {1} until {2}.",
-                    remoteCertificate.Subject,
-                    remoteCertificate.GetEffectiveDateString(),
-                    remoteCertificate.GetExpirationDateString());
+                myLogger.WriteLogMessage("Remote cert was issued to " + remoteCertificate.Subject +
+                    " and is valid from " + remoteCertificate.GetEffectiveDateString() 
+                    + " until " + remoteCertificate.GetExpirationDateString());
             }
             else
             {
-                Console.WriteLine("Remote certificate is null.");
+                myLogger.WriteLogMessage("Remote certificate is null.");
             }
         }
-        private static void DisplayUsage()
-        {
-            Console.WriteLine("To start the server specify:");
-            Console.WriteLine("TCPServer certificateFile.cer");
-            Environment.Exit(1);
-        }
-
+ 
     }
 }

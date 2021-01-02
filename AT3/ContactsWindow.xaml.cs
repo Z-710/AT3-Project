@@ -517,7 +517,7 @@ namespace AT3
         {
             if (nextWindow == false)
             {
-                myLogger.WriteLogMessage("Contacts Login Window");
+                myLogger.WriteLogMessage("Exit Contacts Window");
                 //Close the application
                 Environment.Exit(0);
             }
