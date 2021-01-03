@@ -13,6 +13,8 @@ using System.IO;
 /// https://www.youtube.com/watch?v=AlE5X1NlHgg&t=512s
 /// How to write an SSL streams application
 /// https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream?view=net-5.0
+/// How to get input from the console window
+/// https://www.programiz.com/csharp-programming/basic-input-output
 /// </acknowledgments>
 
 namespace TCPClient
@@ -79,15 +81,22 @@ namespace TCPClient
                 client.Close();
                 return;
             }
-            // Encode a test message into a byte array.
-            // Signal the end of the message using the "<EOF>".
-            byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
-            // Send hello message to the server.
-            sslStream.Write(messsage);
-            sslStream.Flush();
-            // Read message from the server.
-            string serverMessage = ReadMessage(sslStream);
-            Console.WriteLine("Server says: {0}", serverMessage);
+            // Allow user to enter and send messages until "end" is entered
+            string msgString = "";
+            while (msgString != "end<EOF>")
+            {
+                // Ask for the string to send
+                Console.Write("Enter a string - ");
+                msgString = Console.ReadLine()+"<EOF>";
+                // Encode the message into a byte array.
+                byte[] message = Encoding.UTF8.GetBytes(msgString);
+                // Send message to the server.
+                sslStream.Write(message);
+                sslStream.Flush();
+                // Read message from the server.
+                string serverMessage = ReadMessage(sslStream);
+                Console.WriteLine("Server says: {0}", serverMessage);
+            }
             // Close the client connection.
             client.Close();
             Console.WriteLine("Client closed.");
@@ -140,7 +149,7 @@ namespace TCPClient
             serverCertificateName = args[1];
             clientCertificateFile = args[2];
             SslTcpClient.RunClient(machineName, serverCertificateName, clientCertificateFile);
-            return 0;
+            return 0;            
         }
     }
 }

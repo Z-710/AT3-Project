@@ -73,18 +73,19 @@ namespace AT3
                 DisplayCertificateInformation(sslStream);
                 DisplayStreamProperties(sslStream);
 
-                // Set timeouts for the read and write to 5 seconds.
-                sslStream.ReadTimeout = 5000;
-                sslStream.WriteTimeout = 5000;
-                // Read a message from the client.
-                myLogger.WriteLogMessage("Waiting for client message...");
-                string messageData = ReadMessage(sslStream);
-                myLogger.WriteLogMessage("Received: " + messageData);
+                // Don't set timeouts for the read and write
+                string messageData = "";
+                while (messageData != "end<EOF>")
+                {
+                    // Read a message from the client.
+                    myLogger.WriteLogMessage("Waiting for client message...");
+                    messageData = ReadMessage(sslStream);
+                    myLogger.WriteLogMessage("Received: " + messageData);
+                    // Write the message back to the client.
+                    byte[] message = Encoding.UTF8.GetBytes("Message received " + messageData);
+                    sslStream.Write(message);
+                }
 
-                // Write a message to the client.
-                byte[] message = Encoding.UTF8.GetBytes("Hello from the server.<EOF>");
-                myLogger.WriteLogMessage("Sending hello message.");
-                sslStream.Write(message);
             }
             catch (AuthenticationException e)
             {
@@ -117,7 +118,7 @@ namespace AT3
             int bytes = -1;
             do
             {
-                // Read the client's test message.
+                // Read the client's message.
                 bytes = sslStream.Read(buffer, 0, buffer.Length);
 
                 // Use Decoder class to convert from bytes to UTF8
