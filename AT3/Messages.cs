@@ -15,7 +15,7 @@ namespace AT3
         private static int selectedContact = 0;
         private static string messageFile = "";
         public static int newestMessage = 0;
-
+        private static bool[] messagesReadFromFile = new bool[Contacts.numContacts];
         // Define array of message structures that will be used by the Messages window
         public struct Messagestruct
         {
@@ -30,15 +30,22 @@ namespace AT3
             if (_instance == null)
             {
                 _instance = new Messages();
+                // Initialise the read message file array
+                for (int contactIndex = 0; contactIndex < Contacts.numContacts; contactIndex++)
+                {
+                    messagesReadFromFile[contactIndex] = false;
+                }
+                // Initialise the Messages array
+                int arrayIndex;
+                for (arrayIndex = 0; arrayIndex < numMessages; arrayIndex++)
+                {
+                    MessageArray[arrayIndex].type = "";
+                    MessageArray[arrayIndex].message = "";
+                    MessageArray[arrayIndex].time = "";
+                }
+
             }
-            // Initialise the Messages array
-            int arrayIndex;
-            for (arrayIndex = 0; arrayIndex < numMessages; arrayIndex++)
-            {
-                MessageArray[arrayIndex].type = "";
-                MessageArray[arrayIndex].message = "";
-                MessageArray[arrayIndex].time = "";
-            }
+
             // Setup the message filename from the contact number passed in 
             selectedContact = contact;
             messageFile = "contact" + selectedContact.ToString() + "messages.xml";
@@ -122,6 +129,8 @@ namespace AT3
             string messageType = "";
             string messageMessage = "";
             string messageTime = "";
+            //If messages file has already been read in don't read again
+            if (messagesReadFromFile[Contacts.selectedContact - 1 ] == true) return;
             try
             {
                 // Create the AT3 and Chatterpillar folders if they do not exist
@@ -181,6 +190,7 @@ namespace AT3
 
 
                     }
+                    messagesReadFromFile[Contacts.selectedContact - 1] = true;
                     Xtr.Close();
                     Xtr = null;
                 }

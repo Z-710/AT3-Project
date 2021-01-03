@@ -5,6 +5,11 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using System.Threading.Tasks;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Sockets;
+using System.Net.Security;
+using System.Net;
 
 namespace AT3
 {
@@ -185,6 +190,22 @@ namespace AT3
             {
 
             }
+        }
+        public bool ValidContact(TcpClient client)
+        {
+            IPEndPoint RemAddr = (IPEndPoint)client.Client.RemoteEndPoint;
+            // Read the contact array
+            for (int arrayIndex = 0; arrayIndex < numContacts; arrayIndex++)
+            {
+                // Populate array element
+                if (ContactArray[arrayIndex].IPAddress == RemAddr.Address.ToString())
+                {
+                    selectedContact = arrayIndex + 1;
+                    return true; 
+                }
+                arrayIndex++;
+            }
+            return false;
         }
     }
 }

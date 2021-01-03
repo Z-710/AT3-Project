@@ -16,6 +16,8 @@ using System.Diagnostics;
 /// <acknowledgments>
 /// How to write an SSL streams application
 /// https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream?view=net-5.0
+/// How to get the IP address of the connected client
+/// https://social.msdn.microsoft.com/Forums/en-US/c3aaf33d-6dd2-48e2-9808-62c6f1576ec8/get-ip-address-from-tcpclient-class?forum=netfxnetcom
 /// </acknowledgments>
 
 namespace AT3
@@ -25,14 +27,22 @@ namespace AT3
         // Certificate file that will be used
         public const string serverCertificateFile = "test.z-710.com.cer";
         private int serverPortNum;
+        private int contactMatched;
         // Logger
         Logger myLogger = null;
+        // Contacts
+        Contacts myContacts = null;
+        // Messages
+        Messages myMessages = null;
         // Use GetInstance function to get access to the single object  
         public CommsServer(string port)
         {
             // Initialise the Logger
             myLogger = Logger.GetInstance();
             serverPortNum = Convert.ToInt32(port);
+            // Initialise the Contacts
+            myContacts = Contacts.GetInstance();
+
         }
         ~CommsServer()
         {
@@ -50,9 +60,23 @@ namespace AT3
             {
                 myLogger.WriteLogMessage("Waiting for a client to connect...");
                 // Application blocks while waiting for an incoming connection.
-                // Type CNTL-C to terminate the server.
                 TcpClient client = listener.AcceptTcpClient();
-                ProcessClient(client);
+                DisplayIPProperties(client);
+                if (myContacts.ValidContact(client))
+                {
+                    // Connect to the messages object passing in the matched contact
+                    myMessages = Messages.GetInstance(Contacts.selectedContact);
+                    myMessages.ReadMessages();
+                    // Allow connection, valid IP
+                    myLogger.WriteLogMessage("Valid IP");
+                    ProcessClient(client);
+                }
+                else
+                {
+                    //Reject connection
+                    myLogger.WriteLogMessage("Invalid IP");
+
+                }
             } 
         }
         private void ProcessClient(TcpClient client)
@@ -72,7 +96,6 @@ namespace AT3
                 DisplaySecurityServices(sslStream);
                 DisplayCertificateInformation(sslStream);
                 DisplayStreamProperties(sslStream);
-
                 // Don't set timeouts for the read and write
                 string messageData = "";
                 while (messageData != "end<EOF>")
@@ -84,6 +107,16 @@ namespace AT3
                     // Write the message back to the client.
                     byte[] message = Encoding.UTF8.GetBytes("Message received " + messageData);
                     sslStream.Write(message);
+                    // Build up the message structure and add to the array
+                    Messages.Messagestruct msg;
+                    msg.type = "receive";
+                    msg.message = messageData;
+                    DateTime now = DateTime.Now;
+                    msg.time = now.ToString();
+                    myMessages.AddMessage(msg);
+                    myLogger.WriteLogMessage("message: type " + msg.type
+                        + " datetime " + msg.time + " msg "
+                        + msg.message + " newest message " + Messages.newestMessage);
                 }
 
             }
@@ -182,6 +215,23 @@ namespace AT3
                 myLogger.WriteLogMessage("Remote certificate is null.");
             }
         }
- 
+        private void DisplayIPProperties(TcpClient client)
+        {
+            IPEndPoint RemAddr = (IPEndPoint)client.Client.RemoteEndPoint;
+            IPEndPoint LocAddr = (IPEndPoint)client.Client.LocalEndPoint;
+
+            if (RemAddr != null)
+            {
+                // Using the RemoteEndPoint property.
+                myLogger.WriteLogMessage("Remote IP: " + RemAddr.Address.ToString());
+            }
+
+            if (LocAddr != null)
+            {
+                // Using the LocalEndPoint property.
+                myLogger.WriteLogMessage("Local IP: " + LocAddr.Address.ToString());
+            }
+        }
+
     }
 }
