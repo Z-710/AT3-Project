@@ -34,7 +34,6 @@ namespace AT3
         Contacts myContacts = null;
         // Messages
         Messages myMessages = null;
-        // Use GetInstance function to get access to the single object  
         public CommsServer(string port)
         {
             // Initialise the Logger
@@ -42,7 +41,8 @@ namespace AT3
             serverPortNum = Convert.ToInt32(port);
             // Initialise the Contacts
             myContacts = Contacts.GetInstance();
-
+            // Initialise the Messages
+            myMessages = Messages.GetInstance();
         }
         ~CommsServer()
         {
@@ -64,9 +64,6 @@ namespace AT3
                 DisplayIPProperties(client);
                 if (myContacts.ValidContact(client))
                 {
-                    // Connect to the messages object passing in the matched contact
-                    myMessages = Messages.GetInstance(Contacts.selectedContact);
-                    myMessages.ReadMessages();
                     // Allow connection, valid IP
                     myLogger.WriteLogMessage("Valid IP");
                     ProcessClient(client);
@@ -113,10 +110,10 @@ namespace AT3
                     msg.message = messageData;
                     DateTime now = DateTime.Now;
                     msg.time = now.ToString();
-                    myMessages.AddMessage(msg);
+                    myMessages.AddMessage(msg, Contacts.selectedContact);
                     myLogger.WriteLogMessage("message: type " + msg.type
                         + " datetime " + msg.time + " msg "
-                        + msg.message + " newest message " + Messages.newestMessage);
+                        + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
                 }
 
             }

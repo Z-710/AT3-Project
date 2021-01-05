@@ -41,19 +41,18 @@ namespace AT3
             myContacts = Contacts.GetInstance();
             // Initialise the Settings
             mySettings = Settings.GetInstance();
-            // Initialise the Messages (passing in the selected contact)
-            myMessages = Messages.GetInstance(Contacts.selectedContact);
-            myMessages.ReadMessages();
+            // Initialise the Messages
+            myMessages = Messages.GetInstance();
             // Set the scrollbar thumb size
             MessageScrollBar.Minimum = messagesShown;
-            MessageScrollBar.Maximum = Messages.newestMessage;
+            MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
             MessageScrollBar.ViewportSize = messagesShown;
-            myLogger.WriteLogMessage("Number of messages is " + Messages.newestMessage.ToString());
-            MessageScrollBar.Value = Messages.newestMessage;
+            myLogger.WriteLogMessage("Number of messages is " + Messages.perContactInfo[Contacts.selectedContact].newestMessage.ToString());
+            MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
             // The cursor starts at the bottom of the list 
-            cursorPosition = Messages.newestMessage;
+            cursorPosition = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
             // Populate the message form 
-            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
         }
 
@@ -72,7 +71,7 @@ namespace AT3
         private void WritingWindow_Closing(object sender, CancelEventArgs e)
         {
             // Save the message file 
-            myMessages.WriteMessages();
+            myMessages.WriteMessages(Contacts.selectedContact);
             myLogger.WriteLogMessage("Writing Messages File");
             myLogger.WriteLogMessage("Exit Writing Window");
             if (nextWindow == false)
@@ -93,7 +92,7 @@ namespace AT3
                 // Populate the message form 
                 cursorPosition = roundedValue;
                 if (cursorPosition < messagesShown) return;
-                myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+                myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
                 PopulateMessageForm();
                 myLogger.WriteLogMessage("Scrollbar min = " + MessageScrollBar.Minimum.ToString() + " max = "
                 + MessageScrollBar.Maximum.ToString() + " viewport " + MessageScrollBar.ViewportSize.ToString()
@@ -146,15 +145,15 @@ namespace AT3
             message.message = WritingBox.Text;
             DateTime now = DateTime.Now;
             message.time = now.ToString();
-            myMessages.AddMessage(message);
+            myMessages.AddMessage(message, Contacts.selectedContact);
             myLogger.WriteLogMessage("message: type " + message.type 
                 + " datetime " + message.time + " msg " 
-                + message.message + " newest message " + Messages.newestMessage);
+                + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
             WritingBox.Text = "";
-            MessageScrollBar.Maximum = Messages.newestMessage;
-            MessageScrollBar.Value = Messages.newestMessage;
-            cursorPosition = Messages.newestMessage;
-            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            cursorPosition = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
         }
         private void ReceiveButton_Click(object sender, RoutedEventArgs e)
@@ -165,15 +164,15 @@ namespace AT3
             message.message = WritingBox.Text;
             DateTime now = DateTime.Now;
             message.time = now.ToString();
-            myMessages.AddMessage(message);
+            myMessages.AddMessage(message, Contacts.selectedContact);
             myLogger.WriteLogMessage("message: type " + message.type
                 + " datetime " + message.time + " msg "
-                + message.message + " newest message " + Messages.newestMessage);
+                + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
             WritingBox.Text = "";
-            MessageScrollBar.Maximum = Messages.newestMessage;
-            MessageScrollBar.Value = Messages.newestMessage;
-            cursorPosition = Messages.newestMessage;
-            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray);
+            MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            cursorPosition = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
         }
     }

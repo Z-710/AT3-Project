@@ -200,7 +200,7 @@ namespace AT3
                 // Populate array element
                 if (ContactArray[arrayIndex].IPAddress == RemAddr.Address.ToString())
                 {
-                    selectedContact = arrayIndex + 1;
+                    selectedContact = arrayIndex;
                     return true; 
                 }
                 arrayIndex++;

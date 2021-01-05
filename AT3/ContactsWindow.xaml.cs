@@ -26,6 +26,7 @@ namespace AT3
         Logger myLogger = null;
         Settings mySettings = null;
         bool nextWindow = false;
+        Messages myMessages = null;
         // Row states: 1 is edit mode, 0 shows edit button
         int row1State = 0;
         int row2State = 0;
@@ -44,6 +45,8 @@ namespace AT3
             myContacts = Contacts.GetInstance();
             myLogger.WriteLogMessage("Contacts Initialised");
             myContacts.ReadContacts();
+            // Initialise the Messages objects
+            myMessages = Messages.GetInstance();
             // Populate contacts form
             NameTextBox1.Text = Contacts.ContactArray[0].name;
             NameTextBox2.Text = Contacts.ContactArray[1].name;
@@ -427,7 +430,7 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 1;
+            Contacts.selectedContact = 0;
         }
 
         private void ContactButton2_Click(object sender, RoutedEventArgs e)
@@ -439,7 +442,7 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 2;
+            Contacts.selectedContact = 1;
         }
 
         private void ContactButton3_Click(object sender, RoutedEventArgs e)
@@ -451,7 +454,7 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 3;
+            Contacts.selectedContact = 2;
         }
 
         private void ContactButton4_Click(object sender, RoutedEventArgs e)
@@ -463,7 +466,7 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 4;
+            Contacts.selectedContact = 3;
         }
 
         private void ContactButton5_Click(object sender, RoutedEventArgs e)
@@ -475,7 +478,7 @@ namespace AT3
             ContactButton2.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 5;
+            Contacts.selectedContact = 4;
         }
 
         private void ContactButton6_Click(object sender, RoutedEventArgs e)
@@ -487,7 +490,7 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton2.Background = Brushes.White;
             ContactButton7.Background = Brushes.White;
-            Contacts.selectedContact = 6;
+            Contacts.selectedContact = 5;
         }
 
         private void ContactButton7_Click(object sender, RoutedEventArgs e)
@@ -499,13 +502,13 @@ namespace AT3
             ContactButton5.Background = Brushes.White;
             ContactButton6.Background = Brushes.White;
             ContactButton2.Background = Brushes.White;
-            Contacts.selectedContact = 7;
+            Contacts.selectedContact = 6;
         }
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             myLogger.WriteLogMessage("Selected Contact: " + Contacts.selectedContact.ToString());
-            if (Contacts.selectedContact > 0)
+            if (Contacts.selectedContact >= 0)
             {
                 nextWindow = true;
                 WritingWindow wW = new WritingWindow();
@@ -518,6 +521,7 @@ namespace AT3
             if (nextWindow == false)
             {
                 myLogger.WriteLogMessage("Exit Contacts Window");
+                myMessages.WriteMessages(Contacts.selectedContact);
                 //Close the application
                 Environment.Exit(0);
             }
