@@ -48,6 +48,8 @@ namespace AT3
                 EnterPassword.Content = "New Password";
                 firstTimePassword = true;
             }
+            // Check the current state 
+            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

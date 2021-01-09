@@ -27,7 +27,6 @@ namespace AT3
         // Certificate file that will be used
         public const string serverCertificateFile = "test.z-710.com.cer";
         private int serverPortNum;
-        private int contactMatched;
         // Logger
         Logger myLogger = null;
         // Contacts
@@ -43,6 +42,10 @@ namespace AT3
             myContacts = Contacts.GetInstance();
             // Initialise the Messages
             myMessages = Messages.GetInstance();
+            // Set the comms state to listening 
+            CommsFSM.SetNextState(CommsFSM.Command.Start);
+            // Check the current state 
+            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
         }
         ~CommsServer()
         {
@@ -58,22 +61,42 @@ namespace AT3
             listener.Start();
             while (true)
             {
-                myLogger.WriteLogMessage("Waiting for a client to connect...");
-                // Application blocks while waiting for an incoming connection.
-                TcpClient client = listener.AcceptTcpClient();
-                DisplayIPProperties(client);
-                if (myContacts.ValidContact(client))
+                if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.Listening)
                 {
-                    // Allow connection, valid IP
-                    myLogger.WriteLogMessage("Valid IP");
-                    ProcessClient(client);
+                    myLogger.WriteLogMessage("Waiting for a client to connect...");
+                    // Application blocks while waiting for an incoming connection.
+                    TcpClient client = listener.AcceptTcpClient();
+                    DisplayIPProperties(client);
+                    if (myContacts.ValidContact(client))
+                    {
+                        // Allow connection, valid IP
+                        myLogger.WriteLogMessage("Valid IP");
+                        // Set the comms state to contact called 
+                        CommsFSM.SetNextState(CommsFSM.Command.ContactConnects);
+                        // Check the current state 
+                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                        ProcessClient(client);
+                        // Set the comms state to not connected
+                        CommsFSM.SetNextState(CommsFSM.Command.ContactDisconnects);
+                        // Check the current state 
+                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                        // Set the comms state to listening
+                        CommsFSM.SetNextState(CommsFSM.Command.Start);
+                        // Check the current state 
+                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                    }
+                    else
+                    {
+                        //Reject connection
+                        myLogger.WriteLogMessage("Invalid IP");
+
+                    }
                 }
                 else
                 {
-                    //Reject connection
-                    myLogger.WriteLogMessage("Invalid IP");
-
+                    Thread.Sleep(10000);
                 }
+
             } 
         }
         private void ProcessClient(TcpClient client)

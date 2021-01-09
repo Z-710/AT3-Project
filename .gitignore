@@ -25,6 +25,7 @@ AT3/obj/Debug/App.g.i.cs
 AT3/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 AT3/obj/Release/AT3_MarkupCompile.cache
 AT3/obj/Release/AT3_MarkupCompile.lref
+AT3/obj/Release/MainWindow.g.cs
 AT3/obj/Release/ContactsWindow.g.cs
 AT3/obj/Release/WritingWindow.g.cs
 TCPClient/bin/Debug/TCPClient.exe
