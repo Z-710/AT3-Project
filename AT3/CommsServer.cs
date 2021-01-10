@@ -27,6 +27,7 @@ namespace AT3
         // Certificate file that will be used
         public const string serverCertificateFile = "test.z-710.com.cer";
         private int serverPortNum;
+        SslStream contactSslStream = null;
         // Logger
         Logger myLogger = null;
         // Contacts
@@ -105,7 +106,7 @@ namespace AT3
             // SslStream using the client's network stream.
             SslStream sslStream = new SslStream(
                 client.GetStream(), false);
-            
+            contactSslStream = sslStream;
             // Authenticate the server but don't require the client to authenticate.
             try
             {
@@ -124,17 +125,19 @@ namespace AT3
                     myLogger.WriteLogMessage("Waiting for client message...");
                     messageData = ReadMessage(sslStream);
                     myLogger.WriteLogMessage("Received: " + messageData);
-                    // Write the message back to the client.
-                    byte[] message = Encoding.UTF8.GetBytes("Message received " + messageData);
-                    sslStream.Write(message);
+                    // Set the comms state to contact connected
+                    CommsFSM.SetNextState(CommsFSM.Command.UserAnswers);
+                    // Check the current state 
+                    myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
                     // Build up the message structure and add to the array
                     Messages.Messagestruct msg;
                     msg.type = "receive";
                     msg.message = messageData;
+                    msg.messageSent = true;
                     DateTime now = DateTime.Now;
                     msg.time = now.ToString();
                     myMessages.AddMessage(msg, Contacts.selectedContact);
-                    myLogger.WriteLogMessage("message: type " + msg.type
+                    myLogger.WriteLogMessage("receivedmessage: type " + msg.type
                         + " datetime " + msg.time + " msg "
                         + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
                 }
@@ -159,6 +162,37 @@ namespace AT3
                 // the sslStream.
                 sslStream.Close();
                 client.Close();
+            }
+        }
+        public void MessageSender()
+        {
+            Messages.Messagestruct msg;
+            msg.type = "";
+            msg.message = "";
+            msg.messageSent = false;
+            msg.time = "";
+            // Thread to send the user entered messages to the connected client 
+            myLogger.WriteLogMessage("Message sender started");
+            while (true)
+            {
+                if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+                {
+                    // Write any new messages to the client.
+                    if (contactSslStream != null)
+                    {
+                         if (myMessages.GetUserMessage(ref msg, Contacts.selectedContact))
+                         {
+                            myLogger.WriteLogMessage("MessageSender: type " + msg.type
+                       + " datetime " + msg.time + " msg "
+                       + msg.message + " newest message " );
+                            byte[] message = Encoding.UTF8.GetBytes(msg.message + "<EOF>");
+                            contactSslStream.Write(message);
+                         }
+
+                    }
+
+                }
+                Thread.Sleep(1000);
             }
         }
         private string ReadMessage(SslStream sslStream)
@@ -252,6 +286,7 @@ namespace AT3
                 myLogger.WriteLogMessage("Local IP: " + LocAddr.Address.ToString());
             }
         }
+
 
     }
 }

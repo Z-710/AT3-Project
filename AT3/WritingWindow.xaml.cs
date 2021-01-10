@@ -145,10 +145,11 @@ namespace AT3
             message.message = WritingBox.Text;
             DateTime now = DateTime.Now;
             message.time = now.ToString();
+            message.messageSent = false;
             myMessages.AddMessage(message, Contacts.selectedContact);
-            myLogger.WriteLogMessage("message: type " + message.type 
-                + " datetime " + message.time + " msg " 
-                + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+            myLogger.WriteLogMessage("sendbuttonmessage: type " + message.type
+            + " datetime " + message.time + " msg "
+            + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
             WritingBox.Text = "";
             MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
             MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
@@ -156,24 +157,6 @@ namespace AT3
             myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
         }
-        private void ReceiveButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Build up the message structure and add to the array
-            Messages.Messagestruct message;
-            message.type = "receive";
-            message.message = WritingBox.Text;
-            DateTime now = DateTime.Now;
-            message.time = now.ToString();
-            myMessages.AddMessage(message, Contacts.selectedContact);
-            myLogger.WriteLogMessage("message: type " + message.type
-                + " datetime " + message.time + " msg "
-                + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
-            WritingBox.Text = "";
-            MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-            MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-            cursorPosition = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-            myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
-            PopulateMessageForm();
-        }
+
     }
 }

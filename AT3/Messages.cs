@@ -17,6 +17,7 @@ namespace AT3
             public string type;
             public string message;
             public string time;
+            public bool messageSent;
         }
         public static Messagestruct[,] MessageArray = new Messagestruct[numMessages, Contacts.numContacts];
         // Define array of per contact information
@@ -40,6 +41,7 @@ namespace AT3
                         MessageArray[arrayIndex, contactNum].type = "";
                         MessageArray[arrayIndex, contactNum].message = "";
                         MessageArray[arrayIndex, contactNum].time = "";
+                        MessageArray[arrayIndex, contactNum].messageSent = false;
                     }
                 }
                 // Setup the per contact default information
@@ -67,6 +69,7 @@ namespace AT3
         {
 
         }
+        // Write the message array to the xml file
         public void WriteMessages(int contact)
         {
             // Messages file created under %appdata% which is C:\Users\<CurrentUser>\AppData\Roaming
@@ -125,7 +128,7 @@ namespace AT3
 
         }
 
-
+        // Read the contact messages xml file
         private static void ReadMessages(int contact)
         {
             // Messages file created under %appdata% which is C:\Users\<CurrentUser>\AppData\Roaming
@@ -186,6 +189,7 @@ namespace AT3
                                         string decryptedMessage = Encryption.Decrypt(messageMessage, null);
                                         MessageArray[arrayIndex, contact].message = decryptedMessage;
                                         MessageArray[arrayIndex, contact].time = messageTime;
+                                        MessageArray[arrayIndex, contact].messageSent = true;
                                         // Set the most recent message 
                                         perContactInfo[contact].newestMessage = arrayIndex;
                                         arrayIndex++;
@@ -210,6 +214,7 @@ namespace AT3
 
             }
         }
+        // Return the set of newest messages that can fill the message window 
         public void GetMessages(int cursor, int numMsgs, ref Messagestruct[] msgArray, int contact)
         {
             // Clear out the message array
@@ -225,6 +230,7 @@ namespace AT3
                 msgArray[i] = MessageArray[cursor - i, contact];
             }    
         }
+        // Add a received message to the messages array so it can be displayed
         public void AddMessage(Messagestruct msg, int contact)
         {
             // Add a new message to the messages array, shuffling down elements if full
@@ -240,6 +246,23 @@ namespace AT3
                 perContactInfo[contact].newestMessage++;
             }
             MessageArray[perContactInfo[contact].newestMessage, contact] = msg;
+        }
+        // Check to see if there is a newly entered message. If so return it.   
+        public bool GetUserMessage(ref Messagestruct msg,int contact)
+        {
+            // Find the oldest message that has not been sent
+            for (int i = 0; i <= perContactInfo[contact].newestMessage; i++)
+            {
+                if ((MessageArray[i,contact].messageSent == false) && (MessageArray[i,contact].type == "send"))
+                {
+                    msg = MessageArray[i, contact];
+                    // Message will be sent
+                    MessageArray[i, contact].messageSent = true;
+                    return true;
+                }
+            }
+            return false;
+
         }
     }
 }

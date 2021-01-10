@@ -29,6 +29,5 @@
         <TextBox x:Name="MessageBox4" HorizontalAlignment="Left" Height="31" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox2" HorizontalAlignment="Left" Height="32" Margin="0,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FFB6B6B6"/>
         <TextBox x:Name="MessageBox1" HorizontalAlignment="Left" Height="32" Margin="0,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="629" Background="#FF629AEC"/>
-        <Button x:Name="ReceiveButton" Content="Receive" HorizontalAlignment="Left" Margin="668,150,0,0" VerticalAlignment="Top" Width="113" FontSize="20" Click="ReceiveButton_Click"/>
     </Grid>
 </Window>

@@ -90,10 +90,12 @@ namespace AT3
             {
                 Contacts.CommsServerStarted = true;
                 CommsServer serverObject = new CommsServer(Settings.settingsStructure.port);
-                Thread InstanceCaller = new Thread(
-                    new ThreadStart(serverObject.RunServer));
+                Thread InstanceCaller = new Thread(new ThreadStart(serverObject.RunServer));
                 // Start the thread.
                 InstanceCaller.Start();
+                Thread InstanceCaller2 = new Thread(new ThreadStart(serverObject.MessageSender));
+                // Start the thread.
+                InstanceCaller2.Start();
                 myLogger.WriteLogMessage("CommsServer Initialised");
             }
         }
