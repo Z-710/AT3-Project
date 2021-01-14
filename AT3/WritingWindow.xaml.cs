@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Threading;
+using System.Windows.Threading;
+using System.Timers;
 
-
+/// <acknowledgements>
+/// Create a dispatchtimer in wpf
+/// https://www.c-sharpcorner.com/UploadFile/mahesh/timer-in-wpf/
+/// </acknowledgments>
 namespace AT3
 {
     /// <summary>
     /// Interaction logic for WritingWindow.xaml
     /// </summary>
+   
     public partial class WritingWindow : Window
     {
+
         Contacts myContacts = null;
         Logger myLogger = null;
         Settings mySettings = null;
@@ -54,8 +53,31 @@ namespace AT3
             // Populate the message form 
             myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
+            // Setup a timer event
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(ViewUpdater);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
+        // Update the view if the contact is connected to handle newly received messages
+        public void ViewUpdater(Object sender, EventArgs e)
+        {
 
+            if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+            {
+                MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+                // Only update the view window if we're at the bottom
+                if (cursorPosition == Messages.perContactInfo[Contacts.selectedContact].newestMessage)
+                {
+                    MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+                    myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
+                    PopulateMessageForm();
+                    myLogger.WriteLogMessage("View updated");
+                }
+            }
+
+
+        }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             
@@ -135,6 +157,7 @@ namespace AT3
             MessageBox10.Text = viewArray[9].time +" "+ viewArray[9].message;
             if (viewArray[9].type == "send") MessageBox10.Background = Brushes.LightSkyBlue;
             else MessageBox10.Background = Brushes.LightGray;
+
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)

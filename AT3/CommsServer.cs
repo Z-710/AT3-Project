@@ -137,7 +137,7 @@ namespace AT3
                     DateTime now = DateTime.Now;
                     msg.time = now.ToString();
                     myMessages.AddMessage(msg, Contacts.selectedContact);
-                    myLogger.WriteLogMessage("receivedmessage: type " + msg.type
+                    myLogger.WriteLogMessage("addreceivedmessage: type " + msg.type
                         + " datetime " + msg.time + " msg "
                         + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
                 }
