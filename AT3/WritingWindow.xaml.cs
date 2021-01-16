@@ -62,21 +62,15 @@ namespace AT3
         // Update the view if the contact is connected to handle newly received messages
         public void ViewUpdater(Object sender, EventArgs e)
         {
-
-            if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+            // Only update the view window if we have a new unprocessed message
+            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) && (myMessages.NewMessageReceived(Contacts.selectedContact)))
             {
-                MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-                // Only update the view window if we're at the bottom
-                if (cursorPosition == Messages.perContactInfo[Contacts.selectedContact].newestMessage)
-                {
+                    MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
                     MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
                     myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
                     PopulateMessageForm();
                     myLogger.WriteLogMessage("View updated");
-                }
             }
-
-
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -169,6 +163,7 @@ namespace AT3
             DateTime now = DateTime.Now;
             message.time = now.ToString();
             message.messageSent = false;
+            message.newMessageProcessed = true;
             myMessages.AddMessage(message, Contacts.selectedContact);
             myLogger.WriteLogMessage("sendbuttonmessage: type " + message.type
             + " datetime " + message.time + " msg "

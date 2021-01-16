@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.IO;
 
 /// <acknowledgments>
@@ -23,7 +24,7 @@ namespace TCPClient
     {
         static X509Certificate clientCertificate = null;
         private static Hashtable certificateErrors = new Hashtable();
-
+        static SslStream serverSslStream = null;
         // The following method is invoked by the RemoteCertificateValidationDelegate.
         public static bool ValidateServerCertificate(
               object sender,
@@ -65,6 +66,7 @@ namespace TCPClient
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
                 new LocalCertificateSelectionCallback(SelectLocalCertificate)
                 );
+            serverSslStream = sslStream;
             // The server name must match the name on the server certificate.
             try
             {
@@ -93,13 +95,24 @@ namespace TCPClient
                 // Send message to the server.
                 sslStream.Write(message);
                 sslStream.Flush();
-                // Read message from the server.
-                string serverMessage = ReadMessage(sslStream);
-                Console.WriteLine("Server says: {0}", serverMessage);
+
             }
             // Close the client connection.
             client.Close();
             Console.WriteLine("Client closed.");
+        }
+        public static void MessageReceiver()
+        {
+            while (true)
+            {
+                if (serverSslStream != null)
+                {
+                    // Read message from the server.
+                    string serverMessage = ReadMessage(serverSslStream);
+                    Console.WriteLine("Server says: {0}", serverMessage);
+                }
+                Thread.Sleep(1000);
+            }
         }
         static string ReadMessage(SslStream sslStream)
         {
@@ -148,8 +161,14 @@ namespace TCPClient
             machineName = args[0];
             serverCertificateName = args[1];
             clientCertificateFile = args[2];
+            Thread InstanceCaller = new Thread(new ThreadStart(MessageReceiver));
+            // Start the thread.
+            InstanceCaller.Start();
             SslTcpClient.RunClient(machineName, serverCertificateName, clientCertificateFile);
             return 0;            
         }
+
+            
+
     }
 }

@@ -134,6 +134,7 @@ namespace AT3
                     msg.type = "receive";
                     msg.message = messageData;
                     msg.messageSent = true;
+                    msg.newMessageProcessed = false;
                     DateTime now = DateTime.Now;
                     msg.time = now.ToString();
                     myMessages.AddMessage(msg, Contacts.selectedContact);
@@ -171,6 +172,7 @@ namespace AT3
             msg.message = "";
             msg.messageSent = false;
             msg.time = "";
+            msg.newMessageProcessed = true;
             // Thread to send the user entered messages to the connected client 
             myLogger.WriteLogMessage("Message sender started");
             while (true)

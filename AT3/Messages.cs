@@ -18,6 +18,7 @@ namespace AT3
             public string message;
             public string time;
             public bool messageSent;
+            public bool newMessageProcessed;
         }
         public static Messagestruct[,] MessageArray = new Messagestruct[numMessages, Contacts.numContacts];
         // Define array of per contact information
@@ -42,6 +43,7 @@ namespace AT3
                         MessageArray[arrayIndex, contactNum].message = "";
                         MessageArray[arrayIndex, contactNum].time = "";
                         MessageArray[arrayIndex, contactNum].messageSent = false;
+                        MessageArray[arrayIndex, contactNum].newMessageProcessed = false;
                     }
                 }
                 // Setup the per contact default information
@@ -190,6 +192,7 @@ namespace AT3
                                         MessageArray[arrayIndex, contact].message = decryptedMessage;
                                         MessageArray[arrayIndex, contact].time = messageTime;
                                         MessageArray[arrayIndex, contact].messageSent = true;
+                                        MessageArray[arrayIndex, contact].newMessageProcessed = true;
                                         // Set the most recent message 
                                         perContactInfo[contact].newestMessage = arrayIndex;
                                         arrayIndex++;
@@ -258,6 +261,22 @@ namespace AT3
                     msg = MessageArray[i, contact];
                     // Message will be sent
                     MessageArray[i, contact].messageSent = true;
+                    return true;
+                }
+            }
+            return false;
+
+        }
+        // Check to see if there is a newly received message 
+        public bool NewMessageReceived(int contact)
+        {
+            // Find the oldest message that has been received but not processed 
+            for (int i = 0; i <= perContactInfo[contact].newestMessage; i++)
+            {
+                if ((MessageArray[i, contact].newMessageProcessed == false) && (MessageArray[i, contact].type == "receive"))
+                { 
+                    // Mark message as processed
+                    MessageArray[i, contact].newMessageProcessed = true;
                     return true;
                 }
             }
