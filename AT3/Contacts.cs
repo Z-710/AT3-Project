@@ -203,7 +203,6 @@ namespace AT3
                     selectedContact = arrayIndex;
                     return true; 
                 }
-                arrayIndex++;
             }
             return false;
         }

@@ -65,11 +65,12 @@ namespace AT3
             // Only update the view window if we have a new unprocessed message
             if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) && (myMessages.NewMessageReceived(Contacts.selectedContact)))
             {
-                    MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-                    MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
-                    myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
-                    PopulateMessageForm();
-                    myLogger.WriteLogMessage("View updated");
+                MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+                MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+                cursorPosition = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
+                myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
+                PopulateMessageForm();
+                myLogger.WriteLogMessage("View updated");
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

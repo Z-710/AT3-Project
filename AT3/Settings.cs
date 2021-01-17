@@ -142,6 +142,8 @@ namespace AT3
                 }
                 else
                 {
+                    // Default 8080 if no port number exists
+                    Settings.settingsStructure.port = "8080";
                     // Ensure XmlTextReader is Null
                     Xtr = null;
                 }

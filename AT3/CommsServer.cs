@@ -18,6 +18,8 @@ using System.Diagnostics;
 /// https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream?view=net-5.0
 /// How to get the IP address of the connected client
 /// https://social.msdn.microsoft.com/Forums/en-US/c3aaf33d-6dd2-48e2-9808-62c6f1576ec8/get-ip-address-from-tcpclient-class?forum=netfxnetcom
+/// Remove a substring
+/// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#substrings
 /// </acknowledgments>
 
 namespace AT3
@@ -222,7 +224,8 @@ namespace AT3
                     break;
                 }
             } while (bytes != 0);
-
+            // Remove <EOF> from the string
+            messageData.Replace("<EOF>","");
             return messageData.ToString();
         }
         private void DisplaySecurityLevel(SslStream stream)

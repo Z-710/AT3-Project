@@ -66,7 +66,6 @@ namespace TCPClient
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
                 new LocalCertificateSelectionCallback(SelectLocalCertificate)
                 );
-            serverSslStream = sslStream;
             // The server name must match the name on the server certificate.
             try
             {
@@ -83,6 +82,7 @@ namespace TCPClient
                 client.Close();
                 return;
             }
+            serverSslStream = sslStream;
             // Allow user to enter and send messages until "end" is entered
             string msgString = "";
             while (msgString != "end<EOF>")
