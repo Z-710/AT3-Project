@@ -57,6 +57,7 @@ namespace AT3
                     break;
                 case ProcessState.ContactConnected:
                     if (cmd == Command.ContactDisconnects) state = ProcessState.NotConnected;
+                    if (cmd == Command.UserDisconnects) state = ProcessState.NotConnected;
                     break;
                 default:
                     break;

@@ -20,6 +20,8 @@ using System.Diagnostics;
 /// https://social.msdn.microsoft.com/Forums/en-US/c3aaf33d-6dd2-48e2-9808-62c6f1576ec8/get-ip-address-from-tcpclient-class?forum=netfxnetcom
 /// Remove a substring
 /// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#substrings
+/// TcpListener.Pending Method
+/// https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcplistener.pending?view=net-5.0
 /// </acknowledgments>
 
 namespace AT3
@@ -62,38 +64,49 @@ namespace AT3
             // Create a TCP/IP (IPv4) socket and listen for incoming connections
             TcpListener listener = new TcpListener(IPAddress.Any, serverPortNum);
             listener.Start();
+            myLogger.WriteLogMessage("Waiting for a client to connect...");
             while (true)
             {
                 if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.Listening)
                 {
-                    myLogger.WriteLogMessage("Waiting for a client to connect...");
-                    // Application blocks while waiting for an incoming connection.
-                    TcpClient client = listener.AcceptTcpClient();
-                    DisplayIPProperties(client);
-                    if (myContacts.ValidContact(client))
+                    // Check for waiting connection
+                    if (!listener.Pending())
                     {
-                        // Allow connection, valid IP
-                        myLogger.WriteLogMessage("Valid IP");
-                        // Set the comms state to contact called 
-                        CommsFSM.SetNextState(CommsFSM.Command.ContactConnects);
-                        // Check the current state 
-                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
-                        ProcessClient(client);
-                        // Set the comms state to not connected
-                        CommsFSM.SetNextState(CommsFSM.Command.ContactDisconnects);
-                        // Check the current state 
-                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
-                        // Set the comms state to listening
-                        CommsFSM.SetNextState(CommsFSM.Command.Start);
-                        // Check the current state 
-                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                        // Pause for 100 milliseconds
+                        Thread.Sleep(100);
                     }
                     else
                     {
-                        //Reject connection
-                        myLogger.WriteLogMessage("Invalid IP");
+                        // Application accepts the incoming connection.
+                        TcpClient client = listener.AcceptTcpClient();
+                        DisplayIPProperties(client);
+                        if (myContacts.ValidContact(client))
+                        {
+                            // Allow connection, valid IP
+                            myLogger.WriteLogMessage("Valid IP");
+                            // Set the comms state to contact called 
+                            CommsFSM.SetNextState(CommsFSM.Command.ContactConnects);
+                            // Check the current state 
+                            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                            ProcessClient(client);
+                            // Set the comms state to not connected
+                            CommsFSM.SetNextState(CommsFSM.Command.ContactDisconnects);
+                            // Check the current state 
+                            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                            // Set the comms state to listening
+                            CommsFSM.SetNextState(CommsFSM.Command.Start);
+                            // Check the current state 
+                            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                        }
+                        else
+                        {
+                            //Reject connection
+                            myLogger.WriteLogMessage("Invalid IP");
+                            client.Close();
 
+                        }
                     }
+                    
                 }
                 else
                 {

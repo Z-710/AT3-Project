@@ -63,20 +63,20 @@ namespace AT3
             IPTextBox6.Text = Contacts.ContactArray[5].IPAddress;
             IPTextBox7.Text = Contacts.ContactArray[6].IPAddress;
             //Change textboxes to have no borders
-            NameTextBox1.BorderBrush = Brushes.White;
-            NameTextBox2.BorderBrush = Brushes.White;
-            NameTextBox3.BorderBrush = Brushes.White;
-            NameTextBox4.BorderBrush = Brushes.White;
-            NameTextBox5.BorderBrush = Brushes.White;
-            NameTextBox6.BorderBrush = Brushes.White;
-            NameTextBox7.BorderBrush = Brushes.White;
-            IPTextBox1.BorderBrush = Brushes.White;
-            IPTextBox2.BorderBrush = Brushes.White;
-            IPTextBox3.BorderBrush = Brushes.White;
-            IPTextBox4.BorderBrush = Brushes.White;
-            IPTextBox5.BorderBrush = Brushes.White;
-            IPTextBox6.BorderBrush = Brushes.White;
-            IPTextBox7.BorderBrush = Brushes.White;
+            NameTextBox1.BorderBrush = Brushes.Transparent;
+            NameTextBox2.BorderBrush = Brushes.Transparent;
+            NameTextBox3.BorderBrush = Brushes.Transparent;
+            NameTextBox4.BorderBrush = Brushes.Transparent;
+            NameTextBox5.BorderBrush = Brushes.Transparent;
+            NameTextBox6.BorderBrush = Brushes.Transparent;
+            NameTextBox7.BorderBrush = Brushes.Transparent;
+            IPTextBox1.BorderBrush = Brushes.Transparent;
+            IPTextBox2.BorderBrush = Brushes.Transparent;
+            IPTextBox3.BorderBrush = Brushes.Transparent;
+            IPTextBox4.BorderBrush = Brushes.Transparent;
+            IPTextBox5.BorderBrush = Brushes.Transparent;
+            IPTextBox6.BorderBrush = Brushes.Transparent;
+            IPTextBox7.BorderBrush = Brushes.Transparent;
             // Initialise the Settings
             mySettings = Settings.GetInstance();
             myLogger.WriteLogMessage("Settings Initialised");

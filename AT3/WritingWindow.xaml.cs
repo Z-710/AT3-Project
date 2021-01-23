@@ -58,6 +58,14 @@ namespace AT3
             dispatcherTimer.Tick += new EventHandler(ViewUpdater);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
+            // If a contact is connected set the connect button to disconnect
+            if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+            {
+                DisconnectButton.Content = "Disconnect";
+                ConnectedCheck.Content = "Connected";
+                ConnectedCheck.Background = Brushes.Green;
+                ConnectedCheck.IsChecked = true;
+            }
         }
         // Update the view if the contact is connected to handle newly received messages
         public void ViewUpdater(Object sender, EventArgs e)
@@ -177,5 +185,37 @@ namespace AT3
             PopulateMessageForm();
         }
 
+        private void DisconnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.UserConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected))
+            {
+                DisconnectButton.Content = "Connect";
+                ConnectedCheck.Content = "Disconnected";
+                ConnectedCheck.Background = Brushes.Red;
+                ConnectedCheck.IsChecked = false;
+                // Set the comms state to user disconnects
+                CommsFSM.SetNextState(CommsFSM.Command.UserDisconnects);
+                // Set the comms state to listening
+                CommsFSM.SetNextState(CommsFSM.Command.Start);
+            }
+            else
+            {
+                DisconnectButton.Content = "Disconnect";
+                ConnectedCheck.Content = "Connected";
+                ConnectedCheck.Background = Brushes.Green;
+                ConnectedCheck.IsChecked = true;
+                // Set the comms state to user connected
+                CommsFSM.SetNextState(CommsFSM.Command.UserConnects);
+            }
+            // Check the current state 
+            myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+        }
+
+        private void ConnectedCheck_Checked(object sender, RoutedEventArgs e)
+        {
+
+
+        }
     }
 }
