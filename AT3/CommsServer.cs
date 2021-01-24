@@ -134,28 +134,30 @@ namespace AT3
                 DisplayStreamProperties(sslStream);
                 // Don't set timeouts for the read and write
                 string messageData = "";
-                while (messageData != "end<EOF>")
+                while (messageData != "end")
                 {
                     // Read a message from the client.
                     myLogger.WriteLogMessage("Waiting for client message...");
                     messageData = ReadMessage(sslStream);
-                    myLogger.WriteLogMessage("Received: " + messageData);
-                    // Set the comms state to contact connected
-                    CommsFSM.SetNextState(CommsFSM.Command.UserAnswers);
-                    // Check the current state 
-                    myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
-                    // Build up the message structure and add to the array
-                    Messages.Messagestruct msg;
-                    msg.type = "receive";
-                    msg.message = messageData;
-                    msg.messageSent = true;
-                    msg.newMessageProcessed = false;
-                    DateTime now = DateTime.Now;
-                    msg.time = now.ToString();
-                    myMessages.AddMessage(msg, Contacts.selectedContact);
-                    myLogger.WriteLogMessage("addreceivedmessage: type " + msg.type
-                        + " datetime " + msg.time + " msg "
-                        + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+                    if (messageData != "end")
+                    {
+                        // Set the comms state to contact connected
+                        CommsFSM.SetNextState(CommsFSM.Command.UserAnswers);
+                        // Check the current state 
+                        myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
+                        // Build up the message structure and add to the array
+                        Messages.Messagestruct msg;
+                        msg.type = "receive";
+                        msg.message = messageData;
+                        msg.messageSent = true;
+                        msg.newMessageProcessed = false;
+                        DateTime now = DateTime.Now;
+                        msg.time = now.ToString();
+                        myMessages.AddMessage(msg, Contacts.selectedContact);
+                        myLogger.WriteLogMessage("addreceivedmessage: type " + msg.type
+                            + " datetime " + msg.time + " msg "
+                            + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+                    }
                 }
 
             }
@@ -173,9 +175,8 @@ namespace AT3
             }
             finally
             {
-                // The client stream will be closed with the sslStream
-                // because we specified this behavior when creating
-                // the sslStream.
+                // The client stream will be closed with the sslStream because we specified this behavior when creating the sslStream.
+                myLogger.WriteLogMessage("Closing the connection");
                 sslStream.Close();
                 client.Close();
             }
@@ -219,26 +220,37 @@ namespace AT3
             // "<EOF>" marker.
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
+            StringBuilder endString = new StringBuilder("end");
             int bytes = -1;
             do
             {
-                // Read the client's message.
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
-
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                // Check for EOF or an empty message.
-                if (messageData.ToString().IndexOf("<EOF>") != -1)
+                try
                 {
+                    // Read the client's message.
+                    bytes = sslStream.Read(buffer, 0, buffer.Length);
+
+                    // Use Decoder class to convert from bytes to UTF8
+                    // in case a character spans two buffers.
+                    Decoder decoder = Encoding.UTF8.GetDecoder();
+                    char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
+                    decoder.GetChars(buffer, 0, bytes, chars, 0);
+                    messageData.Append(chars);
+                    // Check for EOF or an empty message.
+                    if (messageData.ToString().IndexOf("<EOF>") != -1)
+                    {
+                        break;
+                    }
+                }
+                catch
+                {
+                    myLogger.WriteLogMessage("Error in ReadMessage caught");
+                    messageData = endString;
                     break;
                 }
             } while (bytes != 0);
             // Remove <EOF> from the string
-            messageData.Replace("<EOF>","");
+            myLogger.WriteLogMessage("Received: " + "\"" + messageData + "\"");
+            messageData.Replace("<EOF>", "");
             return messageData.ToString();
         }
         private void DisplaySecurityLevel(SslStream stream)

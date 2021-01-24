@@ -59,7 +59,7 @@ namespace AT3
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
             // If a contact is connected set the connect button to disconnect
-            if (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.UserConnected))
             {
                 DisconnectButton.Content = "Disconnect";
                 ConnectedCheck.Content = "Connected";
@@ -79,6 +79,14 @@ namespace AT3
                 myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
                 PopulateMessageForm();
                 myLogger.WriteLogMessage("View updated");
+            }
+            // If a contact connects change textbox to connected 
+            if(CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
+            {
+                DisconnectButton.Content = "Disconnect";
+                ConnectedCheck.Content = "Connected";
+                ConnectedCheck.Background = Brushes.Green;
+                ConnectedCheck.IsChecked = true;
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -192,6 +200,7 @@ namespace AT3
             {
                 DisconnectButton.Content = "Connect";
                 ConnectedCheck.Content = "Disconnected";
+                DisconnectButton.IsEnabled = true;
                 ConnectedCheck.Background = Brushes.Red;
                 ConnectedCheck.IsChecked = false;
                 // Set the comms state to user disconnects
