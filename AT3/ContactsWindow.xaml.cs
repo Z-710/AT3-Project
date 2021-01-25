@@ -13,13 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 
 namespace AT3
 {
-    /// <summary>
-    /// Interaction logic for ContactsWindow.xaml
-    /// </summary>
+    /// <acknowledgments>
+    /// Window.ShowDialog Method
+    /// https://docs.microsoft.com/en-us/dotnet/api/system.windows.window.showdialog?view=net-5.0
+    /// Window.DialogResult Property
+    /// https://docs.microsoft.com/en-us/dotnet/api/system.windows.window.dialogresult?view=net-5.0
+    /// </acknowledgments>
     public partial class ContactsWindow : Window
     {
         Contacts myContacts = null;
@@ -27,6 +31,7 @@ namespace AT3
         Settings mySettings = null;
         bool nextWindow = false;
         Messages myMessages = null;
+        bool dialogOpened = false; 
         // Row states: 1 is edit mode, 0 shows edit button
         int row1State = 0;
         int row2State = 0;
@@ -98,8 +103,33 @@ namespace AT3
                 InstanceCaller2.Start();
                 myLogger.WriteLogMessage("CommsServer Initialised");
             }
+            // Setup a timer event
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(ContactConnectedCheck);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
-
+        //See if a known contact has connected and if so pop up a dialog
+        public void ContactConnectedCheck(Object sender, EventArgs e)
+        {
+            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) && (dialogOpened == false))
+            {
+                dialogOpened = true;
+                ConnectDialog cD = new ConnectDialog();
+                cD.Owner = this;
+                Nullable<bool> dialogResult = cD.ShowDialog();
+                myLogger.WriteLogMessage("User Accepts:"+dialogResult.ToString());
+                if (dialogResult == true)
+                {
+                    nextWindow = true;
+                    WritingWindow wW = new WritingWindow();
+                    wW.Show();
+                    this.Close();
+                }
+                
+            }
+  
+        }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

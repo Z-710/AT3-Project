@@ -64,3 +64,7 @@ ThreadingApp/obj/Debug/ThreadingApp.csprojAssemblyReference.cache
 ThreadingApp/obj/Debug/ThreadingApp.exe
 ThreadingApp/obj/Debug/ThreadingApp.pdb
 ThreadingApp/obj/Release/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+AT3/obj/Debug/ConnectDialog.baml
+AT3/obj/Debug/ConnectDialog.g.cs
+AT3/obj/Debug/ConnectDialog.g.i.cs
+AT3/obj/Release/ConnectDialog.g.cs

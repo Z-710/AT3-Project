@@ -61,6 +61,9 @@
     </ApplicationDefinition>
     <Compile Include="CommsFSM.cs" />
     <Compile Include="CommsServer.cs" />
+    <Compile Include="ConnectDialog.xaml.cs">
+      <DependentUpon>ConnectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts.cs" />
     <Compile Include="ContactsWindow.xaml.cs">
       <DependentUpon>ContactsWindow.xaml</DependentUpon>
@@ -72,6 +75,10 @@
     <Compile Include="WritingWindow.xaml.cs">
       <DependentUpon>WritingWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ConnectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ContactsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
