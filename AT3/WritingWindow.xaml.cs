@@ -71,7 +71,7 @@ namespace AT3
         public void ViewUpdater(Object sender, EventArgs e)
         {
             // Only update the view window if we have a new unprocessed message
-            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) && (myMessages.NewMessageReceived(Contacts.selectedContact)))
+            if (((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.UserConnected)) && (myMessages.NewMessageReceived(Contacts.selectedContact)))
             {
                 MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
                 MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;

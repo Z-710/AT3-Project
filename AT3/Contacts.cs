@@ -20,8 +20,9 @@ namespace AT3
         private static Contacts _instance = null;
         // Fixed number of max contacts 
         public const int numContacts = 7;
-        // Remember whether the comms server has been run
+        // Remember whether the comms server and client have been run
         public static bool CommsServerStarted = false;
+        public static bool CommsClientStarted = false;
         // Define array of contact structures that will be used by the contacts window
         public struct ContactStruct
         {

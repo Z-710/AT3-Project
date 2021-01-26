@@ -103,6 +103,20 @@ namespace AT3
                 InstanceCaller2.Start();
                 myLogger.WriteLogMessage("CommsServer Initialised");
             }
+            // Setup the comms client
+            // Create the thread object, passing in the
+            // serverObject.RunClient method using a ThreadStart delegate.
+            if (Contacts.CommsClientStarted == false)
+            {
+                Contacts.CommsClientStarted = true;
+                CommsClient clientObject = new CommsClient(Settings.settingsStructure.port);
+                Thread InstanceCaller3 = new Thread(new ThreadStart(clientObject.RunClient));
+                // Start the thread.
+                InstanceCaller3.Start();
+                Thread InstanceCaller4 = new Thread(new ThreadStart(clientObject.MessageReceiver));
+                // Start the thread.
+                InstanceCaller4.Start();
+            }
             // Setup a timer event
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(ContactConnectedCheck);

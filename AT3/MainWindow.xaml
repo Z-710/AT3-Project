@@ -20,7 +20,7 @@
             <Image Margin="0,90,9,233" Source="Symbol.JPG"/>
         </Border>
         <Label x:Name="EnterPassword" Content="Enter Password" HorizontalAlignment="Left" Margin="446,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button Content="Enter" HorizontalAlignment="Left" Margin="446,240,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click" Height="28"/>
+        <Button Content="Enter" HorizontalAlignment="Left" Margin="446,240,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click" Height="28" IsDefault="True"/>
         <Label x:Name="Confirmation" Content="" HorizontalAlignment="Left" Margin="458,268,0,0" VerticalAlignment="Top" Width="134"/>
         <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="446,200,0,0" VerticalAlignment="Top" Width="134" Height="22" RenderTransformOrigin="0.639,0.571"/>
     </Grid>

@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommsClient.cs" />
     <Compile Include="CommsFSM.cs" />
     <Compile Include="CommsServer.cs" />
     <Compile Include="ConnectDialog.xaml.cs">
