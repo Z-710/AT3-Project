@@ -136,11 +136,12 @@ namespace AT3
                         }
                         Thread.Sleep(1000);
                     }
-                    Thread.Sleep(1000);
+                    myLogger.WriteLogMessage("Closing Client Connection.");
                     // Close the client connection.
                     client.Close();
-                    myLogger.WriteLogMessage("Client closed.");
+                    serverSslStream = null;
                 }
+                Thread.Sleep(1000);
             }
         }
         public void MessageReceiver()
@@ -167,6 +168,10 @@ namespace AT3
                         myLogger.WriteLogMessage("addreceivedmessage: type " + msg.type
                             + " datetime " + msg.time + " msg "
                             + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+                    }
+                    else
+                    {
+                        myLogger.WriteLogMessage("End received");
                     }
                 }
                 Thread.Sleep(1000);

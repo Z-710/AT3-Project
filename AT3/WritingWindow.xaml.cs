@@ -205,6 +205,7 @@ namespace AT3
                 ConnectedCheck.IsChecked = false;
                 // Set the comms state to user disconnects
                 CommsFSM.SetNextState(CommsFSM.Command.UserDisconnects);
+                myLogger.WriteLogMessage("Current state is " + CommsFSM.GetCurrentState().ToString());
                 // Set the comms state to listening
                 CommsFSM.SetNextState(CommsFSM.Command.Start);
             }
