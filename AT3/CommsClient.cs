@@ -167,7 +167,8 @@ namespace AT3
                         myMessages.AddMessage(msg, Contacts.selectedContact);
                         myLogger.WriteLogMessage("addreceivedmessage: type " + msg.type
                             + " datetime " + msg.time + " msg "
-                            + msg.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+                            + "\"" + msg.message + "\"" + " newest message " 
+                            + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
                     }
                     else
                     {
@@ -211,6 +212,11 @@ namespace AT3
                     break;
                 }
             } while (bytes != 0);
+            // Make sure there is an <EOF> so we know we have a valid string
+            if (messageData.ToString().IndexOf("<EOF>") == -1)
+            {
+                messageData = endString;
+            }
             // Remove <EOF> from the string
             messageData.Replace("<EOF>", "");
             return messageData.ToString();
