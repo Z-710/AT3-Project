@@ -31,7 +31,8 @@ namespace AT3
         Settings mySettings = null;
         bool nextWindow = false;
         Messages myMessages = null;
-        bool dialogOpened = false; 
+        bool dialogOpened = false;
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
         // Row states: 1 is edit mode, 0 shows edit button
         int row1State = 0;
         int row2State = 0;
@@ -118,7 +119,6 @@ namespace AT3
                 InstanceCaller4.Start();
             }
             // Setup a timer event
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(ContactConnectedCheck);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
@@ -137,6 +137,7 @@ namespace AT3
                 {
                     nextWindow = true;
                     WritingWindow wW = new WritingWindow();
+                    dispatcherTimer.Stop();
                     wW.Show();
                     this.Close();
                 }
@@ -557,6 +558,7 @@ namespace AT3
             if (Contacts.selectedContact >= 0)
             {
                 nextWindow = true;
+                dispatcherTimer.Stop();
                 WritingWindow wW = new WritingWindow();
                 wW.Show();
                 this.Close();

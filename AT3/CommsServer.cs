@@ -204,7 +204,7 @@ namespace AT3
                          {
                             myLogger.WriteLogMessage("MessageSender: type " + msg.type
                        + " datetime " + msg.time + " msg "
-                       + msg.message + " newest message " );
+                       + "\"" + msg.message + "\"" + " newest message " );
                             byte[] message = Encoding.UTF8.GetBytes(msg.message + "<EOF>");
                             contactSslStream.Write(message);
                          }

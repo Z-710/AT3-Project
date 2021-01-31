@@ -54,10 +54,10 @@ namespace AT3
             myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
             PopulateMessageForm();
             // Setup a timer event
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(ViewUpdater);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
+            DispatcherTimer dispatcherTimer2 = new DispatcherTimer();
+            dispatcherTimer2.Tick += new EventHandler(ViewUpdater);
+            dispatcherTimer2.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer2.Start();
             // If a contact is connected set the connect button to disconnect
             if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.UserConnected))
             {
@@ -87,6 +87,14 @@ namespace AT3
                 ConnectedCheck.Content = "Connected";
                 ConnectedCheck.Background = Brushes.Green;
                 ConnectedCheck.IsChecked = true;
+            }
+            // If a contact disconnects change textbox to disconnected 
+            if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.NotConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.Listening))
+            {
+                DisconnectButton.Content = "Connect";
+                ConnectedCheck.Content = "Disconnected";
+                ConnectedCheck.Background = Brushes.Red;
+                ConnectedCheck.IsChecked = false;
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -184,7 +192,7 @@ namespace AT3
             myMessages.AddMessage(message, Contacts.selectedContact);
             myLogger.WriteLogMessage("sendbuttonmessage: type " + message.type
             + " datetime " + message.time + " msg "
-            + message.message + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
+            + "\"" + message.message + "\"" + " newest message " + Messages.perContactInfo[Contacts.selectedContact].newestMessage);
             WritingBox.Text = "";
             MessageScrollBar.Maximum = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
             MessageScrollBar.Value = Messages.perContactInfo[Contacts.selectedContact].newestMessage;
