@@ -58,6 +58,8 @@ namespace AT3
             dispatcherTimer2.Tick += new EventHandler(ViewUpdater);
             dispatcherTimer2.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer2.Start();
+            //Set title of writing window
+            this.Title = "Not Connected";
             // If a contact is connected set the connect button to disconnect
             if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.UserConnected))
             {
@@ -65,6 +67,8 @@ namespace AT3
                 ConnectedCheck.Content = "Connected";
                 ConnectedCheck.Background = Brushes.Green;
                 ConnectedCheck.IsChecked = true;
+                //Set title of writing window
+                this.Title = "Chatting with " + Contacts.ContactArray[Contacts.selectedContact].name;
             }
         }
         // Update the view if the contact is connected to handle newly received messages
@@ -79,6 +83,8 @@ namespace AT3
                 myMessages.GetMessages(cursorPosition, messagesShown, ref viewArray, Contacts.selectedContact);
                 PopulateMessageForm();
                 myLogger.WriteLogMessage("View updated");
+                //Set title of writing window
+                this.Title = "Chatting with " + Contacts.ContactArray[Contacts.selectedContact].name;
             }
             // If a contact connects change textbox to connected 
             if(CommsFSM.GetCurrentState() == CommsFSM.ProcessState.ContactConnected)
@@ -87,6 +93,8 @@ namespace AT3
                 ConnectedCheck.Content = "Connected";
                 ConnectedCheck.Background = Brushes.Green;
                 ConnectedCheck.IsChecked = true;
+                //Set title of writing window
+                this.Title = "Chatting with " + Contacts.ContactArray[Contacts.selectedContact].name;
             }
             // If a contact disconnects change textbox to disconnected 
             if ((CommsFSM.GetCurrentState() == CommsFSM.ProcessState.NotConnected) || (CommsFSM.GetCurrentState() == CommsFSM.ProcessState.Listening))
@@ -95,6 +103,8 @@ namespace AT3
                 ConnectedCheck.Content = "Disconnected";
                 ConnectedCheck.Background = Brushes.Red;
                 ConnectedCheck.IsChecked = false;
+                //Set title of writing window
+                this.Title = "Not Connected";
             }
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
