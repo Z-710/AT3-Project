@@ -80,6 +80,7 @@
         <Button x:Name="ConnectButton" Content="Select" HorizontalAlignment="Left" Margin="108,419,0,0" VerticalAlignment="Top" Width="97" FontSize="20" Height="39" Click="ConnectButton_Click" Grid.Column="2"/>
         <TextBox x:Name="PortBox" HorizontalAlignment="Left" Height="34" Margin="122,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" FontSize="18" BorderBrush="{x:Null}" IsReadOnly="True" Text="Enter here"/>
         <Button x:Name="EditButton1" Content="Edit" HorizontalAlignment="Left" Margin="121,62,0,0" VerticalAlignment="Top" Width="84" FontSize="20" Height="35" Click="EditButton1_Click" Grid.Column="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,199,0,0" TextWrapping="Wrap" Text="Note: Changing port number requires you to restart program" VerticalAlignment="Top" Height="90" Width="178"/>
 
 
     </Grid>
